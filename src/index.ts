@@ -1,27 +1,32 @@
 import express from 'express';
-import cors from 'cors';
-import { v4 as uuidv4 } from 'uuid';
 import { config } from './config';
 import { Agent } from './services/agent';
 import { ChatMessage } from './types';
+import { chatService } from './services/chat';
 
 const app = express();
-app.use(cors());
+
+// Enable CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
+
 app.use(express.json());
 
 // Initialize the agent
 const agent = new Agent();
 
-// In-memory storage for chat sessions
-const sessions = new Map<string, { messages: ChatMessage[]; createdAt: Date }>();
-
 // Create a new chat session
-app.post('/api/chat/session', (req, res) => {
+app.post('/api/chat/session', async (req, res) => {
     try {
-        const sessionId = uuidv4();
-        sessions.set(sessionId, { messages: [], createdAt: new Date() });
-        console.log('Creating new session:', sessionId);
-        console.log('Current sessions:', Array.from(sessions.keys()));
+        const sessionId = await chatService.createSession();
         res.json({ sessionId });
     } catch (error) {
         console.error('Error creating session:', error);
@@ -30,14 +35,10 @@ app.post('/api/chat/session', (req, res) => {
 });
 
 // Get all chat sessions
-app.get('/api/chat/sessions', (req, res) => {
+app.get('/api/chat/sessions', async (req, res) => {
     try {
-        const sessionList = Array.from(sessions.entries()).map(([id, data]) => ({
-            id,
-            messages: data.messages,
-            createdAt: data.createdAt
-        }));
-        res.json({ sessions: sessionList });
+        const sessions = await chatService.getAllSessions();
+        res.json({ sessions });
     } catch (error) {
         console.error('Error getting sessions:', error);
         res.status(500).json({ error: 'Failed to get sessions' });
@@ -45,20 +46,16 @@ app.get('/api/chat/sessions', (req, res) => {
 });
 
 // Get a specific chat session
-app.get('/api/chat/session/:sessionId', (req, res) => {
+app.get('/api/chat/session/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
-        const session = sessions.get(sessionId);
+        const session = await chatService.getSession(sessionId);
         
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
-        res.json({
-            id: sessionId,
-            messages: session.messages,
-            createdAt: session.createdAt
-        });
+
+        res.json(session);
     } catch (error) {
         console.error('Error getting session:', error);
         res.status(500).json({ error: 'Failed to get session' });
@@ -66,17 +63,16 @@ app.get('/api/chat/session/:sessionId', (req, res) => {
 });
 
 // Delete a chat session
-app.delete('/api/chat/session/:sessionId', (req, res) => {
+app.delete('/api/chat/session/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
+        const session = await chatService.getSession(sessionId);
         
-        if (!sessions.has(sessionId)) {
+        if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
-        
-        sessions.delete(sessionId);
-        console.log('Deleted session:', sessionId);
-        console.log('Remaining sessions:', Array.from(sessions.keys()));
+
+        await chatService.deleteSession(sessionId);
         res.json({ message: 'Session deleted successfully' });
     } catch (error) {
         console.error('Error deleting session:', error);
@@ -94,22 +90,21 @@ app.post('/api/chat/:sessionId', async (req, res) => {
             return res.status(400).json({ error: 'Invalid message format' });
         }
 
-        console.log('Getting session:', sessionId);
-        console.log('Available sessions:', Array.from(sessions.keys()));
-
-        const session = sessions.get(sessionId);
+        const session = await chatService.getSession(sessionId);
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
         }
 
         // Add user message to session
-        session.messages.push({ role: 'user', content: message });
+        const userMessage: ChatMessage = { role: 'user', content: message };
+        await chatService.addMessage(sessionId, userMessage);
 
         // Get response from agent
-        const response = await agent.processQuery(message, session.messages);
+        const response = await agent.processQuery(message, [...session.messages, userMessage]);
 
         // Add assistant message to session
-        session.messages.push({ role: 'assistant', content: response.response });
+        const assistantMessage: ChatMessage = { role: 'assistant', content: response.response };
+        await chatService.addMessage(sessionId, assistantMessage);
 
         res.json({ response: response.response });
     } catch (error) {
