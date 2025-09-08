@@ -105,21 +105,25 @@ async function ingestSemanticChunks(filePath: string) {
             openai_model: config.embedding.model
         });
 
-        // Delete existing collection if it exists
+        // Get or create collection
+        let collection;
         try {
-            await client.deleteCollection({ name: 'semantic_chunks' });
-            console.log('Deleted existing collection');
+            collection = await client.getCollection({
+                name: 'semantic_chunks',
+                embeddingFunction: embedder
+            });
+            console.log('Using existing collection');
         } catch (error) {
-            console.log('No existing collection to delete');
+            console.log('Creating new collection...');
+            collection = await client.createCollection({
+                name: 'semantic_chunks',
+                embeddingFunction: embedder,
+                metadata: { "hnsw:space": "cosine" }
+            });
         }
 
-        // Create new collection
-        console.log('Creating new collection...');
-        const collection = await client.createCollection({
-            name: 'semantic_chunks',
-            embeddingFunction: embedder,
-            metadata: { "hnsw:space": "cosine" }
-        });
+        // Get current count before ingestion
+        const initialCount = await collection.count();
 
         // Process all chunks
         const documents = data.chunks.map(chunk => ({
@@ -164,11 +168,14 @@ async function ingestSemanticChunks(filePath: string) {
         console.log('✨ Successfully ingested all chunks!');
         
         // Verify ingestion
-        const count = await collection.count();
-        console.log(`Total documents in collection: ${count}`);
+        const finalCount = await collection.count();
+        const ingestedCount = finalCount - initialCount;
+        console.log(`Initial documents in collection: ${initialCount}`);
+        console.log(`Newly ingested documents: ${ingestedCount}`);
+        console.log(`Total documents in collection: ${finalCount}`);
         
-        if (count !== data.totalChunks) {
-            throw new Error(`Expected ${data.totalChunks} chunks but ingested ${count}`);
+        if (ingestedCount !== data.totalChunks) {
+            throw new Error(`Expected to ingest ${data.totalChunks} chunks but ingested ${ingestedCount}`);
         }
 
         // Get a sample document to verify content
@@ -189,7 +196,7 @@ async function ingestSemanticChunks(filePath: string) {
 }
 
 // Get file path from command line or use default
-const filePath = process.argv[2] || path.join(__dirname, 'semantic-chunks.json');
+const filePath = process.argv[2] || path.join(__dirname, 'semantic-chunks2.json');
 
 // Run the ingestion
 console.log('Starting ingestion process...');
