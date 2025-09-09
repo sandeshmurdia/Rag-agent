@@ -41,7 +41,7 @@ export function getConfig(): Config {
         port: parseInt(process.env.PORT || '3000'),
         openai: {
             apiKey: process.env.OPENAI_API_KEY!,
-            chatModel: process.env.OPENAI_CHAT_MODEL || 'gpt-3.5-turbo',
+            chatModel: process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini',
         },
         chroma: {
             url: process.env.CHROMA_URL!,

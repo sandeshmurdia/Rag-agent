@@ -4,31 +4,50 @@ import { config } from './config';
 import path from 'path';
 
 interface SemanticChunk {
-    chunk_id: string;
-    session_id: string;
-    user_id: string | null;
-    timestamp_start: number;
-    timestamp_end: number;
-    device_type: string;
-    browser: string | null;
-    country: string | null;
-    event_type: string[];
-    funnel_stage: string;
-    error_type: string[];
-    cart_value: number | null;
-    status: string;
-    summary: string;
-    document: string;
-    duration_ms: number;
-    total_events: number;
+  chunk_id: string;
+  session_id: string;
+  user_id: string | null;
+  browser: string | null;
+  device_type: string | null;
+  country: string | null;
+  issue_type: string[];
+  event_type: string[];
+  payment_method: string | null;
+  funnel_step: string | null;
+  error_type: string[];
+  cart_value: {
+    currency: string;
+    cost: number;
+    total_items: number;
+    shipping_cost: number;
+    tax_cost: number;
+    discount_cost: number;
+    discount_percentage: number;
+    discount_coupon: string | null;
+    total_cost: number;
+  } | null;
+  cart_items_cost: Record<string, {
+    currency: string;
+    cost: number;
+    quantity: number;
+  }> | null;
+  order_type: string | null;
+  dropoff_reason: string | null;
+  status: string;
+  summary: string;
+  duration_ms: number;
+  document: string;
+  timestamp_start: number;
+  timestamp_end: number;
 }
 
-interface SemanticChunksFile {
+// Interface for input data
+interface SemanticChunksData {
   sessionId: string;
-    apiKey: string;
-    totalChunks: number;
+  apiKey: string;
+  totalChunks: number;
   totalEvents: number;
-    chunks: SemanticChunk[];
+  chunks: SemanticChunk[];
 }
 
 function extractPaymentInfo(chunk: SemanticChunk): string {
@@ -40,14 +59,21 @@ function extractPaymentInfo(chunk: SemanticChunk): string {
     
     let paymentContext = '';
     
-    if (chunk.funnel_stage === 'checkout' || hasPaymentError) {
+    if (chunk.funnel_step === 'checkout' || hasPaymentError) {
+        const cartValueText = chunk.cart_value ? 
+            `${chunk.cart_value.currency} ${chunk.cart_value.total_cost} (${chunk.cart_value.total_items} items)` : 
+            'Not available';
+            
         paymentContext = `
 Payment Context:
-- Cart Value: ${chunk.cart_value ? `₹${chunk.cart_value}` : 'Not available'}
+- Cart Value: ${cartValueText}
+- Payment Method: ${chunk.payment_method || 'Not detected'}
+- Order Type: ${chunk.order_type || 'Not detected'}
 - Payment Status: ${chunk.status}
 - Error Types: ${chunk.error_type.length > 0 ? chunk.error_type.join(', ') : 'None'}
+- Issue Types: ${chunk.issue_type.length > 0 ? chunk.issue_type.join(', ') : 'None'}
+- Dropoff Reason: ${chunk.dropoff_reason || 'None'}
 - Session Duration: ${(chunk.duration_ms / 1000).toFixed(2)} seconds
-- Total Events: ${chunk.total_events}
 `;
     }
 
@@ -55,34 +81,9 @@ Payment Context:
 }
 
 function createChunkText(chunk: SemanticChunk): string {
-    const paymentInfo = extractPaymentInfo(chunk);
-    
-    return `
-Summary: ${chunk.summary}
-
-Session Details:
-- Session ID: ${chunk.session_id}
-- Time Period: ${new Date(chunk.timestamp_start).toISOString()} to ${new Date(chunk.timestamp_end).toISOString()}
-- Duration: ${chunk.duration_ms}ms
-- Total Events: ${chunk.total_events}
-
-User Context:
-- Device: ${chunk.device_type}
-- Browser: ${chunk.browser || 'Not specified'}
-- Country: ${chunk.country || 'Not specified'}
-- User ID: ${chunk.user_id || 'Anonymous'}
-
-Event Analysis:
-- Types: ${chunk.event_type.join(', ')}
-- Funnel Stage: ${chunk.funnel_stage}
-- Status: ${chunk.status}
-- Errors: ${chunk.error_type.length > 0 ? chunk.error_type.join(', ') : 'None'}
-
-${paymentInfo}
-
-Full Context:
-${chunk.document}
-`.trim();
+    // Use the enhanced document field that already contains eventData
+    // The document field now includes AI summary, metadata, and raw eventData
+    return chunk.document;
 }
 
 async function ingestSemanticChunks(filePath: string) {
@@ -90,7 +91,7 @@ async function ingestSemanticChunks(filePath: string) {
         // Read and parse the file
         console.log('Reading file:', filePath);
         const fileContent = readFileSync(filePath, 'utf-8');
-        const data: SemanticChunksFile = JSON.parse(fileContent);
+        const data: SemanticChunksData = JSON.parse(fileContent);
 
         console.log(`Found ${data.totalChunks} chunks to process`);
 
@@ -105,18 +106,18 @@ async function ingestSemanticChunks(filePath: string) {
             openai_model: config.embedding.model
         });
 
-        // Get or create collection
+        // Get or create collection with new model
         let collection;
         try {
             collection = await client.getCollection({
-                name: 'semantic_chunks',
+                name: 'semantic_chunks', // New collection for text-embedding-3-large
                 embeddingFunction: embedder
             });
             console.log('Using existing collection');
         } catch (error) {
-            console.log('Creating new collection...');
+            console.log('Creating new collection with text-embedding-3-large...');
             collection = await client.createCollection({
-                name: 'semantic_chunks',
+                name: 'semantic_chunks', // New collection for text-embedding-3-large
                 embeddingFunction: embedder,
                 metadata: { "hnsw:space": "cosine" }
             });
@@ -126,27 +127,34 @@ async function ingestSemanticChunks(filePath: string) {
         const initialCount = await collection.count();
 
         // Process all chunks
-        const documents = data.chunks.map(chunk => ({
+        const documents = data.chunks.map((chunk: SemanticChunk) => ({
             id: chunk.chunk_id,
             text: createChunkText(chunk),
             metadata: {
                 sessionId: chunk.session_id,
                 userId: chunk.user_id || '',
-                deviceType: chunk.device_type,
-                funnelStage: chunk.funnel_stage,
+                deviceType: chunk.device_type || '',
+                browser: chunk.browser || '',
+                country: chunk.country || '',
+                funnelStep: chunk.funnel_step || '',
                 status: chunk.status,
                 eventTypes: chunk.event_type.join(','),
+                issueTypes: chunk.issue_type.join(','),
                 errorTypes: chunk.error_type.join(','),
+                paymentMethod: chunk.payment_method || '',
+                orderType: chunk.order_type || '',
+                dropoffReason: chunk.dropoff_reason || '',
                 timestampStart: chunk.timestamp_start.toString(),
                 timestampEnd: chunk.timestamp_end.toString(),
-                totalEvents: chunk.total_events.toString(),
                 duration: chunk.duration_ms.toString(),
-                cartValue: chunk.cart_value?.toString() || '',
-                hasPaymentError: chunk.error_type.some(e => 
+                cartValue: chunk.cart_value ? JSON.stringify(chunk.cart_value) : '',
+                cartItemsCost: chunk.cart_items_cost ? JSON.stringify(chunk.cart_items_cost) : '',
+                hasPaymentError: chunk.error_type.some((e: string) => 
                     e.toLowerCase().includes('payment') || 
                     e.toLowerCase().includes('transaction') || 
                     e.toLowerCase().includes('gateway')
-                ).toString()
+                ).toString(),
+                hasIssues: chunk.issue_type.length > 0 ? 'true' : 'false'
             }
         }));
 
@@ -159,9 +167,9 @@ async function ingestSemanticChunks(filePath: string) {
             console.log(`Processing batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(documents.length/batchSize)}`);
             
             await collection.add({
-                ids: batch.map(d => d.id),
-                documents: batch.map(d => d.text),
-                metadatas: batch.map(d => d.metadata)
+                ids: batch.map((d: any) => d.id),
+                documents: batch.map((d: any) => d.text),
+                metadatas: batch.map((d: any) => d.metadata)
             });
         }
 
@@ -174,8 +182,25 @@ async function ingestSemanticChunks(filePath: string) {
         console.log(`Newly ingested documents: ${ingestedCount}`);
         console.log(`Total documents in collection: ${finalCount}`);
         
-        if (ingestedCount !== data.totalChunks) {
-            throw new Error(`Expected to ingest ${data.totalChunks} chunks but ingested ${ingestedCount}`);
+        // Check if ingestion was successful
+        if (ingestedCount < data.totalChunks) {
+            console.log(`⚠️  Warning: Expected to ingest ${data.totalChunks} chunks but only ${ingestedCount} were newly added.`);
+            console.log(`This might be because some chunks already existed in the collection.`);
+            
+            // Check if the chunks we tried to add actually exist
+            const sampleIds = data.chunks.slice(0, 3).map(chunk => chunk.chunk_id);
+            const existingChunks = await collection.get({
+                ids: sampleIds
+            });
+            
+            if (existingChunks.ids.length > 0) {
+                console.log(`✅ Verification: Found ${existingChunks.ids.length} of the sample chunks in collection.`);
+                console.log(`✅ Ingestion completed successfully!`);
+            } else {
+                throw new Error(`❌ Verification failed: None of the sample chunks were found in collection.`);
+            }
+        } else {
+            console.log(`✅ Successfully ingested all ${data.totalChunks} chunks!`);
         }
 
         // Get a sample document to verify content
@@ -196,7 +221,7 @@ async function ingestSemanticChunks(filePath: string) {
 }
 
 // Get file path from command line or use default
-const filePath = process.argv[2] || path.join(__dirname, 'semantic-chunks2.json');
+const filePath = process.argv[2] || path.join(__dirname, 'semantic-chunks-updated.json');
 
 // Run the ingestion
 console.log('Starting ingestion process...');

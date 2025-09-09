@@ -32,7 +32,7 @@ An AI-powered product catalog assistant that uses ChromaDB for vector search and
    CHROMA_URL=http://localhost:8000
    CHROMA_COLLECTION=users_embeddings
    EMBEDDING_MODEL=text-embedding-ada-002
-   OPENAI_CHAT_MODEL=gpt-3.5-turbo
+   OPENAI_CHAT_MODEL=gpt-4o-mini
    ```
 
 4. **Start ChromaDB**

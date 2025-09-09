@@ -55,7 +55,7 @@ Provide a detailed analysis focusing on:
 Format your response in a clear, structured manner with specific metrics where available.`;
 
         const completion = await this.openai.chat.completions.create({
-            model: config.openai.chatModel || 'gpt-3.5-turbo',
+            model: config.openai.chatModel || 'gpt-4o-mini',
             messages: [{ role: "user", content: analysisPrompt }],
             temperature: 0.7,
         });
@@ -127,7 +127,7 @@ Focus on providing specific metrics, trends, and actionable insights.`;
             ] as OpenAI.Chat.ChatCompletionMessageParam[];
 
             const completion = await this.openai.chat.completions.create({
-                model: config.openai.chatModel || 'gpt-3.5-turbo',
+                model: config.openai.chatModel || 'gpt-4o-mini',
                 messages,
                 temperature: 0.7,
             });
