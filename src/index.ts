@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
 import { config } from './config';
-import { Agent } from './services/agent';
 import { ChatMessage } from './types';
 import { askQuestion } from './services/ask';
 
@@ -10,8 +9,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Initialize the agent
-const agent = new Agent();
 
 // In-memory storage for chat sessions
 const sessions = new Map<string, { messages: ChatMessage[]; createdAt: Date }>();
