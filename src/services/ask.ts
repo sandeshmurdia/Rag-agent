@@ -13,6 +13,73 @@ import { getOrCreateCollection, queryTopK, QueryResult } from '../chroma';
  * @param question Original user question
  * @returns Enhanced question with checkout/payment context
  */
+/**
+ * Validates if the question is relevant to checkout and payment analysis
+ * @param question User's question
+ * @returns Object containing validation result and suggestions if invalid
+ */
+/**
+ * Validates if the question is relevant to checkout and payment analysis using AI
+ * @param question User's question
+ * @returns Object containing validation result and suggestions if invalid
+ */
+async function validateQuestion(question: string): Promise<{ isValid: boolean; message?: string }> {
+  try {
+    const systemPrompt = `You are a checkout and payment analytics assistant. Validate if questions are relevant to:
+
+- Checkout flow and cart analysis
+- Payment processing and failures
+- Transaction success/failure metrics
+- Revenue impact of payment issues
+- Cart abandonment and conversion
+
+If question is NOT about these topics, explain why and suggest 2 relevant example questions.
+
+Response format:
+{
+  "isRelevant": false,
+  "explanation": "Brief reason",
+  "suggestedQuestions": ["Q1", "Q2"]
+}
+OR
+{
+  "isRelevant": true
+}`;
+
+    const userPrompt = `Question: "${question}"
+
+Is this question relevant to checkout flow and payment analysis? Provide response in the specified JSON format.`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.1,
+      max_tokens: 500,
+      response_format: { type: "json_object" }
+    });
+
+    const response = JSON.parse(completion.choices[0]?.message?.content || '{"isRelevant": true}');
+
+    if (!response.isRelevant) {
+      const message = `${response.explanation}
+
+Try these instead:
+${response.suggestedQuestions.map((q: string) => "• " + q).join('\n')}`;
+
+      return { isValid: false, message };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    console.error('Error validating question:', error);
+    // On error, let the question through to be safe
+    return { isValid: true };
+  }
+}
+
 async function enhanceQuestion(question: string): Promise<string> {
   try {
     const systemPrompt = `You are an expert e-commerce analytics assistant focused on checkout and payment flows. 
@@ -280,11 +347,19 @@ export async function askQuestion(
 ): Promise<string> {
   try {
     /*
-    * Step 1: Get the question and enhance the query with a prompt.
-    * Step 2: Get the embedding of the question.
-    * Step 3: Get the collection and query for relevant documents.
-    * Step 4: Generate an answer using OpenAI.
+    * Step 1: Validate if the question is relevant to checkout/payment analysis
+    * Step 2: Enhance the query with a prompt if valid
+    * Step 3: Get the embedding of the question
+    * Step 4: Get the collection and query for relevant documents
+    * Step 5: Generate an answer using OpenAI
     */
+
+    // Validate question relevance using AI
+    const validation = await validateQuestion(question);
+    if (!validation.isValid) {
+      console.log('Invalid question:', question);
+      return validation.message || "This question is not related to checkout or payment analysis.";
+    }
 
     const enhancedQuestion = await enhanceQuestion(question);
     console.log('Enhanced question:', enhancedQuestion);
