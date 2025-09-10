@@ -250,6 +250,7 @@ Please restructure and format this answer following the guidelines. Maintain all
 IMPORTANT: Only enhance the formatting and structure. Maintain all factual information exactly as is.
            Do not add any recommendations or suggestions.
            Enhance the answer with what is asked and available in the context.
+           I dont want (chunkIndex: x) in the answer.
 `;
 
     const completion = await openai.chat.completions.create({

@@ -19,10 +19,10 @@ interface SemanticChunk {
     currency: string;
     cost: number;
     total_items: number;
-    shipping_cost: number;
-    tax_cost: number;
-    discount_cost: number;
-    discount_percentage: number;
+    shipping_cost: number | null;
+    tax_cost: number | null;
+    discount_cost: number | null;
+    discount_percentage: number | null;
     discount_coupon: string | null;
     total_cost: number;
   } | null;
@@ -34,6 +34,8 @@ interface SemanticChunk {
   order_type: string | null;
   dropoff_reason: string | null;
   checkout_status: string;
+  revenue_loss: number | null; // NEW: total monetary value lost due to abandoned or failed checkout
+  potential_sales_loss: number | null; // NEW: total possible sales lost from abandoned checkout funnel
   summary: string;
   duration_ms: number;
   document: string;
@@ -119,12 +121,16 @@ async function ingestSemanticChunks(filePath: string) {
                 duration: chunk.duration_ms.toString(),
                 cartValue: chunk.cart_value ? JSON.stringify(chunk.cart_value) : '',
                 cartItemsCost: chunk.cart_items_cost ? JSON.stringify(chunk.cart_items_cost) : '',
+                revenueLoss: chunk.revenue_loss ? chunk.revenue_loss.toString() : '', // NEW: Include revenue loss in metadata
+                potentialSalesLoss: chunk.potential_sales_loss ? chunk.potential_sales_loss.toString() : '', // NEW: Include potential sales loss in metadata
                 hasPaymentError: chunk.error_type.some((e: string) => 
                     e.toLowerCase().includes('payment') || 
                     e.toLowerCase().includes('transaction') || 
                     e.toLowerCase().includes('gateway')
                 ).toString(),
-                hasIssues: chunk.issue_type.length > 0 ? 'true' : 'false'
+                hasIssues: chunk.issue_type.length > 0 ? 'true' : 'false',
+                hasRevenueLoss: chunk.revenue_loss && chunk.revenue_loss > 0 ? 'true' : 'false', // NEW: Flag for chunks with revenue loss
+                hasSalesLoss: chunk.potential_sales_loss && chunk.potential_sales_loss > 0 ? 'true' : 'false' // NEW: Flag for chunks with sales loss
             }
         }));
 
@@ -191,7 +197,7 @@ async function ingestSemanticChunks(filePath: string) {
 }
 
 // Get file path from command line or use default
-const filePath = process.argv[2] || path.join(__dirname, 'cart_chunk.json');
+const filePath = process.argv[2] || path.join(__dirname, '1.json');
 
 // Run the ingestion
 console.log('Starting ingestion process...');
