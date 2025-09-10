@@ -45,10 +45,8 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
     }, [message]);
 
     const exampleQueries = [
-        "What laptops are available?",
-        "Show me products under $100",
-        "Compare gaming accessories",
-        "Find kitchen appliances with specific features"
+        "What was the total revenue?",
+        "What items were added to the cart?",
     ];
 
     return (

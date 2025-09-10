@@ -64,10 +64,15 @@ Is this question relevant to checkout flow and payment analysis? Provide respons
     const response = JSON.parse(completion.choices[0]?.message?.content || '{"isRelevant": true}');
 
     if (!response.isRelevant) {
-      const message = `${response.explanation}
+      const message = `## ❌ Invalid Question
+> ${response.explanation}
 
-Try these instead:
-${response.suggestedQuestions.map((q: string) => "• " + q).join('\n')}`;
+## 💡 Try These Questions Instead:
+
+${response.suggestedQuestions.map((q: string) => `• ${q}`).join('\n\n')}
+
+---
+*Note: Focus your questions on checkout flow, payment processing, or transaction metrics.*`;
 
       return { isValid: false, message };
     }
