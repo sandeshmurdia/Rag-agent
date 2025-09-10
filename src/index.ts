@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from './config';
 import { Agent } from './services/agent';
 import { ChatMessage } from './types';
+import { askQuestion } from './services/ask';
 
 const app = express();
 app.use(cors());
@@ -20,8 +21,6 @@ app.post('/api/chat/session', (req, res) => {
     try {
         const sessionId = uuidv4();
         sessions.set(sessionId, { messages: [], createdAt: new Date() });
-        console.log('Creating new session:', sessionId);
-        console.log('Current sessions:', Array.from(sessions.keys()));
         res.json({ sessionId });
     } catch (error) {
         console.error('Error creating session:', error);
@@ -75,8 +74,7 @@ app.delete('/api/chat/session/:sessionId', (req, res) => {
         }
         
         sessions.delete(sessionId);
-        console.log('Deleted session:', sessionId);
-        console.log('Remaining sessions:', Array.from(sessions.keys()));
+
         res.json({ message: 'Session deleted successfully' });
     } catch (error) {
         console.error('Error deleting session:', error);
@@ -94,9 +92,6 @@ app.post('/api/chat/:sessionId', async (req, res) => {
             return res.status(400).json({ error: 'Invalid message format' });
         }
 
-        console.log('Getting session:', sessionId);
-        console.log('Available sessions:', Array.from(sessions.keys()));
-
         const session = sessions.get(sessionId);
         if (!session) {
             return res.status(404).json({ error: 'Session not found' });
@@ -106,12 +101,12 @@ app.post('/api/chat/:sessionId', async (req, res) => {
         session.messages.push({ role: 'user', content: message });
 
         // Get response from agent
-        const response = await agent.processQuery(message, session.messages);
+        const response = await askQuestion(message);
 
         // Add assistant message to session
-        session.messages.push({ role: 'assistant', content: response.response });
-
-        res.json({ response: response.response });
+        session.messages.push({ role: 'assistant', content: response });
+        res.json({ response: response });
+        
     } catch (error) {
         console.error('Error processing message:', error);
         res.status(500).json({ error: 'Failed to process message' });

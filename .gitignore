@@ -57,3 +57,14 @@ chromadb/
 # System Files
 .DS_Store
 Thumbs.db
+
+
+chroma/
+chroma/*
+chromadb/
+chromadb/*
+chromadb-env/
+chromadb-env/*
+chroma-env/
+chroma-env/*
+chroma-env/*

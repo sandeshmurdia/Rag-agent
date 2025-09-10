@@ -22,20 +22,15 @@ class MemoryService {
     }
 
     createSession(sessionId: string): void {
-        console.log('Creating new session:', sessionId);
         this.sessions.set(sessionId, {
             messages: [],
             createdAt: new Date(),
             lastActivity: new Date()
         });
-        console.log('Current sessions:', Array.from(this.sessions.keys()));
     }
 
     getSession(sessionId: string): Session | undefined {
-        console.log('Getting session:', sessionId);
-        console.log('Available sessions:', Array.from(this.sessions.keys()));
         const session = this.sessions.get(sessionId);
-        console.log('Session found:', !!session);
         return session;
     }
 
