@@ -32,6 +32,7 @@ async function validateQuestion(question: string): Promise<{ isValid: boolean; m
 - Transaction success/failure metrics
 - Revenue impact of payment issues
 - Cart abandonment and conversion
+- Any other question that is related to checkout flow, payment processing, revenue impact, total revenue, user behavior, error, otp , funnel steps, dropoff reason, checkout status or transaction metrics
 
 If question is NOT about these topics, explain why and suggest 2 relevant example questions.
 
@@ -136,6 +137,7 @@ IMPORTANT GUIDELINES:
 - Use bullet points for listing issues or recommendations
 - Include trend indicators (↑↓→) where relevant
 - Format currency values consistently with $ and commas
+- The numbers and metrics should be 100% accurate and correct with full context of the data.
 
 3. ANSWER STRUCTURE:
 - Start with a clear summary of key findings
