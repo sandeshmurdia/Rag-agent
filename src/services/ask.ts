@@ -3,24 +3,109 @@ import { config } from '../config';
 import { getEmbedding } from '../embeddings';
 import { getOrCreateCollection, queryTopK, QueryResult } from '../chroma';
 
+/**
+ * Enhances user questions to be more specific to checkout and payment analysis
+ * @param question Original user question
+ * @returns Enhanced question focusing on checkout and payment metrics
+ */
+/**
+ * Enhances user questions using AI to focus on checkout and payment analysis
+ * @param question Original user question
+ * @returns Enhanced question with checkout/payment context
+ */
+async function enhanceQuestion(question: string): Promise<string> {
+  try {
+    const systemPrompt = `You are an expert e-commerce analytics assistant focused on checkout and payment flows. 
+Your task is to correct user questions grammar`;
+
+    const userPrompt = `Original Question: "${question}"`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.3,
+      max_tokens: 1000, 
+    });
+
+    const enhancedQuestion = completion.choices[0]?.message?.content?.trim() || question;
+    
+    // Remove any quotes or "Enhanced Question:" prefix that might be in the response
+    return enhancedQuestion.replace(/^["']|["']$/g, '').replace(/^Enhanced Question:\s*/i, '');
+
+  } catch (error) {
+    console.error('Error enhancing question:', error);
+    // Fallback to original question in case of any error
+    return question;
+  }
+}
+
 // Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: config.openai.apiKey,
 });
 
 function buildSystemPrompt(): string {
-  return `You are a helpful analyst of rrweb session recordings. Your role is to analyze user interactions, errors, and navigation patterns from session replay data.
+  return `You are an expert e-commerce analytics assistant. Your role is to analyze checkout flows, payment patterns, and revenue impact from session data.
 
 IMPORTANT GUIDELINES:
-- Use ONLY the provided context to answer questions
-- If the context doesn't contain relevant information, say "I don't have enough information to answer this question"
-- When referencing specific events, cite the chunkIndex in brackets [chunkIndex: X]
-- Be specific about timestamps, user actions, and error details when available
-- Focus on actionable insights and patterns
-- If asked about errors, provide details about error types, timing, and context
-- If asked about navigation, describe the sequence of page changes and user interactions
 
-Format your responses clearly and provide specific details from the session data.`;
+1. CONTENT FOCUS:
+- Use ONLY the provided context to answer questions
+- If data is insufficient, say "I don't have enough information to answer this question"
+- Focus on revenue impact, conversion metrics, and actionable insights
+- Highlight critical patterns and anomalies
+
+2. DATA PRESENTATION:
+- Present numerical data in tables using markdown format
+- Use bullet points for listing issues or recommendations
+- Include trend indicators (↑↓→) where relevant
+- Format currency values consistently
+
+3. ANSWER STRUCTURE:
+- Start with a clear summary of key findings
+- Group related metrics together
+- Present data in order of business impact
+- End with actionable recommendations if applicable
+
+4. FORMATTING RULES:
+- Use **bold** for important metrics and KPIs
+- Use \`code\` for error codes or technical details
+- Create tables for comparing metrics:
+  | Metric | Value | Change |
+  |--------|--------|--------|
+  | Example | 100 | ↑ 5% |
+- Use > for highlighting critical insights
+- Use ### for section headers
+
+5. SPECIFIC DATA TYPES:
+- Revenue: Always include % change
+- Errors: Group by type/gateway
+- Time metrics: Show trends
+- Conversion: Show funnel steps
+
+Example Answer Format:
+### Summary
+> Key insight or critical finding
+
+**Metrics Overview:**
+| Metric | Current | vs Previous |
+|--------|----------|------------|
+| Revenue | $10,000 | ↑ 15% |
+| Conversion | 2.4% | ↓ 0.3% |
+
+### Detailed Analysis
+• Finding 1
+• Finding 2
+
+### Technical Details
+Error Code: \`ERR_GATEWAY_TIMEOUT\`
+
+### Recommendations
+1. Action item 1
+2. Action item 2`;
 }
 
 function buildUserPrompt(question: string, results: QueryResult[]): string {
@@ -45,6 +130,71 @@ Context:
 ${contextParts.join('\n\n')}
 
 Please analyze the above context and answer the question. When referencing specific information, cite the chunkIndex in brackets [chunkIndex: X].`;
+}
+
+/**
+ * Enhances the answer with proper formatting and structure
+ * @param answer Original answer from the model
+ * @param question Enhanced question that was asked
+ * @returns Formatted and structured answer
+ */
+async function enhanceAnswer(answer: string, question: string): Promise<string> {
+  try {
+    const systemPrompt = `You are an expert e-commerce data formatter. Your task is to enhance and structure the given answer.
+Format the answer following these rules:
+
+1. Structure:
+- Start with a clear summary
+- Group related metrics
+- Present data in order of impact
+- End with recommendations if any
+
+2. Formatting:
+- Use tables for numerical data if available and there should not be extra data in the table from its own.
+- Use bullet points for lists
+- Include trend indicators (↑↓→)
+- Use markdown formatting
+
+3. Highlight:
+- Bold for important metrics
+- Code blocks for technical details
+- Blockquotes for key insights
+- Headers for sections
+
+4. Data Types:
+- Format currencies consistently
+- Show % changes where available
+- Group errors by type
+- Show conversion funnels as steps
+
+Keep all factual information exactly the same - only enhance the formatting and structure.`;
+
+    const userPrompt = `Question: ${question}
+
+Original Answer: ${answer}
+
+Please restructure and format this answer following the guidelines. Maintain all factual information exactly as is.
+
+IMPORTANT: Only enhance the formatting and structure. Maintain all factual information exactly as is.
+           Do not add any recommendations or suggestions.
+           Enhance the answer with what is asked and available in the context.
+`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.3,
+      max_tokens: 1500,
+    });
+
+    return completion.choices[0]?.message?.content?.trim() || answer;
+  } catch (error) {
+    console.error('Error enhancing answer:', error);
+    return answer;
+  }
 }
 
 async function queryRag(
@@ -139,8 +289,18 @@ export async function askQuestion(
     */
 
     const enhancedQuestion = await enhanceQuestion(question);
-    const answer = await queryRag(question, topK, where, rawOnly);
-    return answer;
+    console.log('Enhanced question:', enhancedQuestion);
+    
+    const rawAnswer = await queryRag(enhancedQuestion, topK, where, rawOnly);
+    console.log('Raw answer:', rawAnswer);
+    
+    // Only enhance the answer if we have actual content and not in raw mode
+    const enhancedAnswer = !rawOnly && rawAnswer && !rawAnswer.includes("don't have enough information") 
+      ? await enhanceAnswer(rawAnswer, enhancedQuestion)
+      : rawAnswer;
+    console.log('Enhanced answer:', enhancedAnswer);
+    
+    return enhancedAnswer;
   } catch (error) {
     console.error('Error:', error instanceof Error ? error.message : error);
     throw error;
