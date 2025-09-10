@@ -45,7 +45,7 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
     }, [message]);
 
     const exampleQueries = [
-        "What was the total revenue?",
+        "What was the total revenue lost?",
         "What items were added to the cart?",
     ];
 

@@ -4,20 +4,39 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from './config';
 import { ChatMessage } from './types';
 import { askQuestion } from './services/ask';
+import { storeChatMessage, getChatMessages, deleteChatMessages, getAllSessions } from './services/chat';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-// In-memory storage for chat sessions
-const sessions = new Map<string, { messages: ChatMessage[]; createdAt: Date }>();
+// Get all chat sessions
+app.get('/api/chat/sessions', async (req, res) => {
+    try {
+        const sessions = await getAllSessions();
+        
+        // Get messages for each session
+        const sessionsWithMessages = await Promise.all(
+            sessions.map(async (session) => {
+                const messages = await getChatMessages(session.id);
+                return {
+                    ...session,
+                    messages
+                };
+            })
+        );
+        
+        res.json({ sessions: sessionsWithMessages });
+    } catch (error) {
+        console.error('Error getting sessions:', error);
+        res.status(500).json({ error: 'Failed to get sessions' });
+    }
+});
 
 // Create a new chat session
 app.post('/api/chat/session', (req, res) => {
     try {
         const sessionId = uuidv4();
-        sessions.set(sessionId, { messages: [], createdAt: new Date() });
         res.json({ sessionId });
     } catch (error) {
         console.error('Error creating session:', error);
@@ -25,35 +44,20 @@ app.post('/api/chat/session', (req, res) => {
     }
 });
 
-// Get all chat sessions
-app.get('/api/chat/sessions', (req, res) => {
-    try {
-        const sessionList = Array.from(sessions.entries()).map(([id, data]) => ({
-            id,
-            messages: data.messages,
-            createdAt: data.createdAt
-        }));
-        res.json({ sessions: sessionList });
-    } catch (error) {
-        console.error('Error getting sessions:', error);
-        res.status(500).json({ error: 'Failed to get sessions' });
-    }
-});
-
 // Get a specific chat session
-app.get('/api/chat/session/:sessionId', (req, res) => {
+app.get('/api/chat/session/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
-        const session = sessions.get(sessionId);
+        const messages = await getChatMessages(sessionId);
         
-        if (!session) {
-            return res.status(404).json({ error: 'Session not found' });
+        if (!messages.length) {
+            return res.status(404).json({ error: 'Session not found or empty' });
         }
         
         res.json({
             id: sessionId,
-            messages: session.messages,
-            createdAt: session.createdAt
+            messages: messages,
+            createdAt: new Date() // You might want to get this from the first message's metadata
         });
     } catch (error) {
         console.error('Error getting session:', error);
@@ -62,16 +66,10 @@ app.get('/api/chat/session/:sessionId', (req, res) => {
 });
 
 // Delete a chat session
-app.delete('/api/chat/session/:sessionId', (req, res) => {
+app.delete('/api/chat/session/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
-        
-        if (!sessions.has(sessionId)) {
-            return res.status(404).json({ error: 'Session not found' });
-        }
-        
-        sessions.delete(sessionId);
-
+        await deleteChatMessages(sessionId);
         res.json({ message: 'Session deleted successfully' });
     } catch (error) {
         console.error('Error deleting session:', error);
@@ -89,19 +87,17 @@ app.post('/api/chat/:sessionId', async (req, res) => {
             return res.status(400).json({ error: 'Invalid message format' });
         }
 
-        const session = sessions.get(sessionId);
-        if (!session) {
-            return res.status(404).json({ error: 'Session not found' });
-        }
-
-        // Add user message to session
-        session.messages.push({ role: 'user', content: message });
+        // Store user message
+        const userMessage: ChatMessage = { role: 'user', content: message };
+        await storeChatMessage(sessionId, userMessage);
 
         // Get response from agent
         const response = await askQuestion(message);
 
-        // Add assistant message to session
-        session.messages.push({ role: 'assistant', content: response });
+        // Store assistant message
+        const assistantMessage: ChatMessage = { role: 'assistant', content: response };
+        await storeChatMessage(sessionId, assistantMessage);
+
         res.json({ response: response });
         
     } catch (error) {
@@ -110,7 +106,7 @@ app.post('/api/chat/:sessionId', async (req, res) => {
     }
 });
 
-const port = config.port || 3000;
+const port = 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

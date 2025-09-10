@@ -56,7 +56,7 @@ def main():
         print(f"- {collection.name}")
     
     # Check semantic_chunks collection
-    check_collection("chat_feedback")
+    check_collection("chat_messages")
 
 if __name__ == "__main__":
     main()
