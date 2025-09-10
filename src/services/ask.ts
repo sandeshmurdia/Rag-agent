@@ -59,10 +59,11 @@ IMPORTANT GUIDELINES:
 - Highlight critical patterns and anomalies
 
 2. DATA PRESENTATION:
-- Present numerical data in tables using markdown format
+- For numerical data, use clean HTML tables with proper styling. Example table structure:
+  <table style="width:100%; border-collapse:collapse; margin:10px 0;"><tr style="background:#f5f5f5"><th style="padding:8px; border:1px solid #ddd; text-align:left">Metric</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Value</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Change</th></tr><tr><td style="padding:8px; border:1px solid #ddd">Revenue</td><td style="padding:8px; border:1px solid #ddd; text-align:right">$1,000</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↑ 5%</td></tr></table>
 - Use bullet points for listing issues or recommendations
 - Include trend indicators (↑↓→) where relevant
-- Format currency values consistently
+- Format currency values consistently with $ and commas
 
 3. ANSWER STRUCTURE:
 - Start with a clear summary of key findings
@@ -91,10 +92,7 @@ Example Answer Format:
 > Key insight or critical finding
 
 **Metrics Overview:**
-| Metric | Current | vs Previous |
-|--------|----------|------------|
-| Revenue | $10,000 | ↑ 15% |
-| Conversion | 2.4% | ↓ 0.3% |
+<table style="width:100%; border-collapse:collapse; margin:10px 0;"><tr style="background:#f5f5f5"><th style="padding:8px; border:1px solid #ddd; text-align:left">Metric</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Current</th><th style="padding:8px; border:1px solid #ddd; text-align:right">vs Previous</th></tr><tr><td style="padding:8px; border:1px solid #ddd">Revenue</td><td style="padding:8px; border:1px solid #ddd; text-align:right">$10,000</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↑ 15%</td></tr><tr><td style="padding:8px; border:1px solid #ddd">Conversion</td><td style="padding:8px; border:1px solid #ddd; text-align:right">2.4%</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↓ 0.3%</td></tr></table>
 
 ### Detailed Analysis
 • Finding 1
