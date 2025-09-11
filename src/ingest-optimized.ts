@@ -7,12 +7,9 @@ import path from 'path';
 interface SemanticChunk {
   chunk_id: string;
   session_id: string;
-  user_id: string | null;
   browser: string | null;
   device_type: string | null;
   country: string | null;
-  issue_type: string[];
-  event_type: string[];
   payment_method: string | null;
   funnel_step: string | null;
   error_type: string[];
@@ -38,13 +35,12 @@ interface SemanticChunk {
   revenue_loss: number | null; // NEW: total monetary value lost due to abandoned or failed checkout
   potential_sales_loss: number | null; // NEW: total possible sales lost from abandoned checkout funnel
   summary: string;
-  duration_ms: number;
   document: string;
   timestamp_start: number;
   timestamp_end: number;
   api_key: string;
   customer_id: number;
-  navigations: string[];
+  navigation_url: string;
 }
 
 // Interface for input data
@@ -65,9 +61,11 @@ function createChunkText(chunk: SemanticChunk): string {
 async function ingestSemanticChunks(filePath: string) {
     try {
         // Read and parse the file
+        console.info('Reading file:', filePath);
         const fileContent = readFileSync(filePath, 'utf-8');
         const data: SemanticChunksData = JSON.parse(fileContent);
 
+        console.info(`Found ${data.totalChunks} chunks to process`);
 
         // Initialize ChromaDB client
         const client = new ChromaClient({
@@ -93,7 +91,9 @@ async function ingestSemanticChunks(filePath: string) {
                 name: config.chroma.collection,
                 embeddingFunction: customEmbedder
             });
+            console.info('Using existing collection');
         } catch (error) {
+            console.info(`Creating new collection: ${config.chroma.collection}`);
             collection = await client.createCollection({
                 name: config.chroma.collection,
                 embeddingFunction: customEmbedder,
@@ -110,24 +110,20 @@ async function ingestSemanticChunks(filePath: string) {
             text: createChunkText(chunk),
             metadata: {
                 sessionId: chunk.session_id,
-                userId: chunk.user_id || '',
                 deviceType: chunk.device_type || '',
                 browser: chunk.browser || '',
                 country: chunk.country || '',
                 funnelStep: chunk.funnel_step || '',
                 checkoutStatus: chunk.checkout_status,
-                eventTypes: chunk.event_type.join(','),
-                issueTypes: chunk.issue_type.join(','),
                 errorTypes: chunk.error_type.join(','),
                 paymentMethod: chunk.payment_method || '',
                 orderType: chunk.order_type || '',
                 dropoffReason: chunk.dropoff_reason || '',
                 apiKey: chunk.api_key || '',
                 customerId: chunk.customer_id || '',
-                navigations: chunk.navigations.join(','),
+                navigationUrl: chunk.navigation_url,
                 timestampStart: chunk.timestamp_start.toString(),
                 timestampEnd: chunk.timestamp_end.toString(),
-                duration: chunk.duration_ms.toString(),
                 cartValue: chunk.cart_value ? JSON.stringify(chunk.cart_value) : '',
                 cartItemsCost: chunk.cart_items_cost ? JSON.stringify(chunk.cart_items_cost) : '',
                 revenueLoss: chunk.revenue_loss ? chunk.revenue_loss.toString() : '', // NEW: Include revenue loss in metadata
@@ -137,7 +133,6 @@ async function ingestSemanticChunks(filePath: string) {
                     e.toLowerCase().includes('transaction') || 
                     e.toLowerCase().includes('gateway')
                 ).toString(),
-                hasIssues: chunk.issue_type.length > 0 ? 'true' : 'false',
                 hasRevenueLoss: chunk.revenue_loss && chunk.revenue_loss > 0 ? 'true' : 'false', // NEW: Flag for chunks with revenue loss
                 hasSalesLoss: chunk.potential_sales_loss && chunk.potential_sales_loss > 0 ? 'true' : 'false' // NEW: Flag for chunks with sales loss
             }
@@ -145,9 +140,11 @@ async function ingestSemanticChunks(filePath: string) {
 
         // Add documents in smaller batches
         const batchSize = 5;
+        console.info(`Adding documents in batches of ${batchSize}...`);
         
         for (let i = 0; i < documents.length; i += batchSize) {
             const batch = documents.slice(i, i + batchSize);
+            console.info(`Processing batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(documents.length/batchSize)}`);
             
             await collection.add({
                 ids: batch.map((d: any) => d.id),
@@ -156,13 +153,19 @@ async function ingestSemanticChunks(filePath: string) {
             });
         }
 
+        console.info('✨ Successfully ingested all chunks!');
         
         // Verify ingestion
         const finalCount = await collection.count();
         const ingestedCount = finalCount - initialCount;
+        console.info(`Initial documents in collection: ${initialCount}`);
+        console.info(`Newly ingested documents: ${ingestedCount}`);
+        console.info(`Total documents in collection: ${finalCount}`);
         
         // Check if ingestion was successful
         if (ingestedCount < data.totalChunks) {
+            console.warn(`⚠️  Warning: Expected to ingest ${data.totalChunks} chunks but only ${ingestedCount} were newly added.`);
+            console.warn(`This might be because some chunks already existed in the collection.`);
             
             // Check if the chunks we tried to add actually exist
             const sampleIds = data.chunks.slice(0, 3).map(chunk => chunk.chunk_id);
@@ -171,6 +174,7 @@ async function ingestSemanticChunks(filePath: string) {
             });
             
             if (existingChunks.ids.length > 0) {
+                console.info(`✅ Verification: Found ${existingChunks.ids.length} of the sample chunks in collection.`);
                 console.info(`✅ Ingestion completed successfully!`);
             } else {
                 throw new Error(`❌ Verification failed: None of the sample chunks were found in collection.`);
@@ -185,6 +189,9 @@ async function ingestSemanticChunks(filePath: string) {
         });
 
         if (sample.ids.length > 0) {
+            console.info('\nVerification - Sample document:');
+            console.info('ID:', sample.ids[0]);
+            console.info('Metadata:', sample.metadatas[0]);
         }
     
   } catch (error) {
@@ -197,4 +204,5 @@ async function ingestSemanticChunks(filePath: string) {
 const filePath = process.argv[2] || path.join(__dirname, '2.json');
 
 // Run the ingestion
+console.info('Starting ingestion process...');
 ingestSemanticChunks(filePath);

@@ -152,7 +152,7 @@ export async function queryTopK(
   collection: Collection,
   queryEmbedding: number[],
   topK: number = 8,
-  where?: Record<string, any>
+  where?: any
 ): Promise<QueryResult[]> {
   console.log(`Querying collection for top ${topK} results...`);
   
@@ -163,7 +163,20 @@ console.log('Top K:', topK);
     const response = await collection.query({
       queryEmbeddings: [queryEmbedding],
       nResults: topK,
-      where
+      where : {
+        $and : [
+            {
+                customerId : {
+                    $eq : where.customerId
+                }
+            },
+            {
+                apiKey : {
+                    $eq : where.apiKey
+                }
+            }
+        ]
+      }
     });
     
     // Transform response to our interface

@@ -377,10 +377,14 @@ export async function askQuestion(
     console.log('Enhanced question:', enhancedQuestion);
 
     // Generate metadata filters based on the question
-    const metadataFilters = await generateMetadataFilters(question, customerId, apiKey);
-    const combinedFilters = { ...where, ...metadataFilters };
+    // const metadataFilters = await generateMetadataFilters(question, customerId, apiKey);
+    // const combinedFilters = { ...where, ...metadataFilters };
+    // console.log('Using metadata filters:', combinedFilters);
+    const combinedFilters = {
+        customerId: customerId,
+        apiKey: apiKey,
+    }
     console.log('Using metadata filters:', combinedFilters);
-    
     const rawAnswer = await queryRag(enhancedQuestion, topK, combinedFilters, rawOnly);
     console.log('Raw answer:', rawAnswer);
     

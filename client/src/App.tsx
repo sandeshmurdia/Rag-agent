@@ -144,8 +144,8 @@ export default function App() {
         try {
             const response = await axios.post(`${API_BASE_URL}/chat/${currentSessionId}`, {
                 message: content,
-                customerId : 2000,
-                apiKey
+                customerId : 10,
+                apiKey : "abc"
             });
 
             const assistantMessage: ChatMessageType = {
