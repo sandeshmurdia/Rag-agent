@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
-import { ChromaClient, OpenAIEmbeddingFunction } from 'chromadb';
+import { ChromaClient } from 'chromadb';
 import { config } from './config';
+import { getEmbedding } from './embeddings';
 import path from 'path';
 
 interface SemanticChunk {
@@ -41,6 +42,9 @@ interface SemanticChunk {
   document: string;
   timestamp_start: number;
   timestamp_end: number;
+  api_key: string;
+  customer_id: number;
+  navigations: string[];
 }
 
 // Interface for input data
@@ -61,36 +65,38 @@ function createChunkText(chunk: SemanticChunk): string {
 async function ingestSemanticChunks(filePath: string) {
     try {
         // Read and parse the file
-        console.log('Reading file:', filePath);
         const fileContent = readFileSync(filePath, 'utf-8');
         const data: SemanticChunksData = JSON.parse(fileContent);
 
-        console.log(`Found ${data.totalChunks} chunks to process`);
 
         // Initialize ChromaDB client
         const client = new ChromaClient({
             path: config.chroma.url
         });
 
-        // Initialize embedding function
-        const embedder = new OpenAIEmbeddingFunction({
-            openai_api_key: config.openai.apiKey,
-            openai_model: config.embedding.model
-        });
+        // Create custom embedding function using our multi-modal system
+        const customEmbedder = {
+            generate: async (texts: string[]) => {
+                const embeddings = [];
+                for (const text of texts) {
+                    const embedding = await getEmbedding(text);
+                    embeddings.push(embedding);
+                }
+                return embeddings;
+            }
+        };
 
-        // Get or create collection with new model
+        // Get or create collection with custom embedder
         let collection;
         try {
             collection = await client.getCollection({
-                name: 'semantic_chunks', // New collection for text-embedding-3-large
-                embeddingFunction: embedder
+                name: config.chroma.collection,
+                embeddingFunction: customEmbedder
             });
-            console.log('Using existing collection');
         } catch (error) {
-            console.log('Creating new collection with text-embedding-3-large...');
             collection = await client.createCollection({
-                name: 'semantic_chunks', // New collection for text-embedding-3-large
-                embeddingFunction: embedder,
+                name: config.chroma.collection,
+                embeddingFunction: customEmbedder,
                 metadata: { "hnsw:space": "cosine" }
             });
         }
@@ -116,6 +122,9 @@ async function ingestSemanticChunks(filePath: string) {
                 paymentMethod: chunk.payment_method || '',
                 orderType: chunk.order_type || '',
                 dropoffReason: chunk.dropoff_reason || '',
+                apiKey: chunk.api_key || '',
+                customerId: chunk.customer_id || '',
+                navigations: chunk.navigations.join(','),
                 timestampStart: chunk.timestamp_start.toString(),
                 timestampEnd: chunk.timestamp_end.toString(),
                 duration: chunk.duration_ms.toString(),
@@ -136,11 +145,9 @@ async function ingestSemanticChunks(filePath: string) {
 
         // Add documents in smaller batches
         const batchSize = 5;
-        console.log(`Adding documents in batches of ${batchSize}...`);
         
         for (let i = 0; i < documents.length; i += batchSize) {
             const batch = documents.slice(i, i + batchSize);
-            console.log(`Processing batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(documents.length/batchSize)}`);
             
             await collection.add({
                 ids: batch.map((d: any) => d.id),
@@ -149,19 +156,13 @@ async function ingestSemanticChunks(filePath: string) {
             });
         }
 
-        console.log('✨ Successfully ingested all chunks!');
         
         // Verify ingestion
         const finalCount = await collection.count();
         const ingestedCount = finalCount - initialCount;
-        console.log(`Initial documents in collection: ${initialCount}`);
-        console.log(`Newly ingested documents: ${ingestedCount}`);
-        console.log(`Total documents in collection: ${finalCount}`);
         
         // Check if ingestion was successful
         if (ingestedCount < data.totalChunks) {
-            console.log(`⚠️  Warning: Expected to ingest ${data.totalChunks} chunks but only ${ingestedCount} were newly added.`);
-            console.log(`This might be because some chunks already existed in the collection.`);
             
             // Check if the chunks we tried to add actually exist
             const sampleIds = data.chunks.slice(0, 3).map(chunk => chunk.chunk_id);
@@ -170,13 +171,12 @@ async function ingestSemanticChunks(filePath: string) {
             });
             
             if (existingChunks.ids.length > 0) {
-                console.log(`✅ Verification: Found ${existingChunks.ids.length} of the sample chunks in collection.`);
-                console.log(`✅ Ingestion completed successfully!`);
+                console.info(`✅ Ingestion completed successfully!`);
             } else {
                 throw new Error(`❌ Verification failed: None of the sample chunks were found in collection.`);
             }
         } else {
-            console.log(`✅ Successfully ingested all ${data.totalChunks} chunks!`);
+            console.info(`✅ Successfully ingested all ${data.totalChunks} chunks!`);
         }
 
         // Get a sample document to verify content
@@ -185,9 +185,6 @@ async function ingestSemanticChunks(filePath: string) {
         });
 
         if (sample.ids.length > 0) {
-            console.log('\nVerification - Sample document:');
-            console.log('ID:', sample.ids[0]);
-            console.log('Metadata:', sample.metadatas[0]);
         }
     
   } catch (error) {
@@ -197,8 +194,7 @@ async function ingestSemanticChunks(filePath: string) {
 }
 
 // Get file path from command line or use default
-const filePath = process.argv[2] || path.join(__dirname, '1.json');
+const filePath = process.argv[2] || path.join(__dirname, '2.json');
 
 // Run the ingestion
-console.log('Starting ingestion process...');
 ingestSemanticChunks(filePath);

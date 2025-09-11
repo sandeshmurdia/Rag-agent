@@ -14,9 +14,11 @@
       "issue_type": [],
       "event_type": [
         "pageload",
-        "navigation",
+        "textContent",
+        "navigate",
         "click",
-        "input"
+        "navigate",
+        "textContent"
       ],
       "payment_method": null,
       "funnel_step": null,
@@ -28,9 +30,9 @@
       "checkout_status": "success",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User initiated a session with a page load. User viewed product details and navigated to the products page. User clicked on 'Sign In' button, leading to the login page. User was presented with a login form to access their account.",
+      "summary": "User initiated a new session on the Luxury Vault site. User viewed the products page. User clicked on the 'Sign In' button to navigate to the login page. User was directed to the login page. User viewed the login form with options to sign in or create an account.",
       "duration_ms": 8570,
-      "document": "User initiated a session with a page load. User viewed product details and navigated to the products page. User clicked on 'Sign In' button, leading to the login page. User was presented with a login form to access their account.\n\nEvent Types: pageload, navigation, click, input\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 10\nDuration: 8570ms",
+      "document": "User initiated a new session on the Luxury Vault site. User viewed the products page. User clicked on the 'Sign In' button to navigate to the login page. User was directed to the login page. User viewed the login form with options to sign in or create an account.\n\nEvent Types: pageload, textContent, navigate, click, navigate, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 10\n- Duration: 8570ms",
       "timestamp_start": 1756305381479,
       "timestamp_end": 1756305390049
     },
@@ -44,8 +46,7 @@
       "issue_type": [],
       "event_type": [
         "navigation",
-        "input",
-        "textContent"
+        "input"
       ],
       "payment_method": null,
       "funnel_step": null,
@@ -54,12 +55,12 @@
       "cart_items_cost": null,
       "order_type": null,
       "dropoff_reason": null,
-      "checkout_status": "success",
+      "checkout_status": "abandoned",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the login page. User inputted email address. User inputted password multiple times. User's actions suggest potential issues with the password input field.",
+      "summary": "User navigated to the login page at http://localhost:5173/login, entered email and password multiple times, but no successful login event was recorded.",
       "duration_ms": 17669,
-      "document": "User navigated to the login page. User inputted email address. User inputted password multiple times. User's actions suggest potential issues with the password input field.\n\nEvent Types: navigation, input, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 12\nDuration: 17669ms",
+      "document": "User navigated to the login page at http://localhost:5173/login, entered email and password multiple times, but no successful login event was recorded.\n\nEvent Types: navigation, input\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 12\n- Duration: 17669ms",
       "timestamp_start": 1756305390049,
       "timestamp_end": 1756305407718
     },
@@ -88,9 +89,9 @@
       "checkout_status": "success",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the login page. User remained on the page. User clicked the 'Sign In' button. User navigated to the products page. User received a login success message. User viewed product categories and details. User made multiple API calls to fetch product categories and products. User viewed various products with detailed descriptions and prices.",
+      "summary": "User navigated to login page. User initiated a session. User clicked on 'Sign In' button. User navigated to products page. User received a login success message. User viewed product categories. User made multiple API calls to fetch product categories and product details. User viewed various products with detailed descriptions and prices.",
       "duration_ms": 2557,
-      "document": "User navigated to the login page. User remained on the page. User clicked the 'Sign In' button. User navigated to the products page. User received a login success message. User viewed product categories and details. User made multiple API calls to fetch product categories and products. User viewed various products with detailed descriptions and prices.\n\nEvent Types: navigation, input, click, api_call, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 15\nDuration: 2557ms",
+      "document": "User navigated to login page. User initiated a session. User clicked on 'Sign In' button. User navigated to products page. User received a login success message. User viewed product categories. User made multiple API calls to fetch product categories and product details. User viewed various products with detailed descriptions and prices.\n\nEvent Types: navigation, input, click, api_call, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 15\n- Duration: 2557ms",
       "timestamp_start": 1756305407718,
       "timestamp_end": 1756305410275
     },
@@ -103,23 +104,21 @@
       "country": null,
       "issue_type": [],
       "event_type": [
-        "navigation",
-        "click",
-        "input"
+        "interaction"
       ],
       "payment_method": null,
-      "funnel_step": "add_to_cart",
+      "funnel_step": null,
       "error_type": [],
       "cart_value": null,
       "cart_items_cost": null,
       "order_type": null,
-      "dropoff_reason": "checkout_drop",
-      "checkout_status": "abandoned",
+      "dropoff_reason": null,
+      "checkout_status": "success",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User viewed a product detail page for 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops'. User added the product to the cart. User viewed additional products including 'Mens Casual Premium Slim Fit T-Shirts' and 'Mens Cotton Jacket'. User continued adding products to the cart. User attempted to add multiple items to the cart, but no checkout process was initiated, indicating a potential checkout drop with possible revenue loss.",
+      "summary": "User session with 5 events",
       "duration_ms": 12343,
-      "document": "User viewed a product detail page for 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops'. User added the product to the cart. User viewed additional products including 'Mens Casual Premium Slim Fit T-Shirts' and 'Mens Cotton Jacket'. User continued adding products to the cart. User attempted to add multiple items to the cart, but no checkout process was initiated, indicating a potential checkout drop with possible revenue loss.\n\nEvent Types: navigation, click, input\nIssue Types: None\nFunnel Step: add_to_cart\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: abandoned\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 5\nDuration: 12343ms",
+      "document": "User session with 5 events\n\nEvent Types: interaction\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 5\n- Duration: 12343ms",
       "timestamp_start": 1756305410275,
       "timestamp_end": 1756305422618
     },
@@ -133,8 +132,7 @@
       "issue_type": [],
       "event_type": [
         "navigation",
-        "visibility visible",
-        "textContent"
+        "input"
       ],
       "payment_method": null,
       "funnel_step": "product_detail_view_page",
@@ -143,12 +141,12 @@
       "cart_items_cost": null,
       "order_type": null,
       "dropoff_reason": null,
-      "checkout_status": "success",
+      "checkout_status": "abandoned",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the products page. User's session remained active. User viewed product details including various items. User viewed product details again with the same items. User viewed product details once more with the same items.",
+      "summary": "User navigated to products page, session continued, user viewed product details with various items listed, user added items to cart, cart includes multiple clothing and electronics items, cart total not calculated, checkout process not initiated.",
       "duration_ms": 9360,
-      "document": "User navigated to the products page. User's session remained active. User viewed product details including various items. User viewed product details again with the same items. User viewed product details once more with the same items.\n\nEvent Types: navigation, visibility visible, textContent\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 5\nDuration: 9360ms",
+      "document": "User navigated to products page, session continued, user viewed product details with various items listed, user added items to cart, cart includes multiple clothing and electronics items, cart total not calculated, checkout process not initiated.\n\nEvent Types: navigation, input\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 5\n- Duration: 9360ms",
       "timestamp_start": 1756305422618,
       "timestamp_end": 1756305431978
     },
@@ -163,8 +161,7 @@
       "event_type": [
         "navigation",
         "click",
-        "api_call",
-        "textContent"
+        "api_call"
       ],
       "payment_method": null,
       "funnel_step": null,
@@ -172,13 +169,13 @@
       "cart_value": null,
       "cart_items_cost": null,
       "order_type": null,
-      "dropoff_reason": null,
-      "checkout_status": "success",
+      "dropoff_reason": "checkout_drop",
+      "checkout_status": "abandoned",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User viewed product collections, clicked on a collection button, navigated to the collections page, viewed curated collections, made API calls to fetch products, and viewed featured collections. No errors occurred during the session.",
+      "summary": "User viewed collections page, clicked on 'COLLECTIONS' button, navigated to products page, viewed product details, and clicked 'Add to Cart' multiple times for various items including 'Fjallraven - Foldsack No. 1 Backpack' (USD 109.95), 'Mens Casual Premium Slim Fit T-Shirts' (USD 22.3), and others. No checkout process was completed, indicating potential revenue loss from abandoned cart.",
       "duration_ms": 10790,
-      "document": "User viewed product collections, clicked on a collection button, navigated to the collections page, viewed curated collections, made API calls to fetch products, and viewed featured collections. No errors occurred during the session.\n\nEvent Types: navigation, click, api_call, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 10\nDuration: 10790ms",
+      "document": "User viewed collections page, clicked on 'COLLECTIONS' button, navigated to products page, viewed product details, and clicked 'Add to Cart' multiple times for various items including 'Fjallraven - Foldsack No. 1 Backpack' (USD 109.95), 'Mens Casual Premium Slim Fit T-Shirts' (USD 22.3), and others. No checkout process was completed, indicating potential revenue loss from abandoned cart.\n\nEvent Types: navigation, click, api_call\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: abandoned\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 10\n- Duration: 10790ms",
       "timestamp_start": 1756305431978,
       "timestamp_end": 1756305442768
     },
@@ -196,7 +193,7 @@
         "textContent"
       ],
       "payment_method": null,
-      "funnel_step": null,
+      "funnel_step": "product_detail_view_page",
       "error_type": [],
       "cart_value": null,
       "cart_items_cost": null,
@@ -205,9 +202,9 @@
       "checkout_status": "abandoned",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the products page. User made multiple API calls to fetch product categories and products. User viewed product details including descriptions and prices. User attempted to add products to cart. User's session does not indicate a successful checkout or payment. No errors were encountered during the session.",
+      "summary": "User navigated to products page, fetched product categories successfully, viewed multiple product details including Fjallraven - Foldsack No. 1 Backpack and Mens Casual Premium Slim Fit T-Shirts, added items to cart, but faced no errors. No checkout process was initiated.",
       "duration_ms": 9118,
-      "document": "User navigated to the products page. User made multiple API calls to fetch product categories and products. User viewed product details including descriptions and prices. User attempted to add products to cart. User's session does not indicate a successful checkout or payment. No errors were encountered during the session.\n\nEvent Types: navigation, api_call, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 14\nDuration: 9118ms",
+      "document": "User navigated to products page, fetched product categories successfully, viewed multiple product details including Fjallraven - Foldsack No. 1 Backpack and Mens Casual Premium Slim Fit T-Shirts, added items to cart, but faced no errors. No checkout process was initiated.\n\nEvent Types: navigation, api_call, textContent\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 14\n- Duration: 9118ms",
       "timestamp_start": 1756305442768,
       "timestamp_end": 1756305451886
     },
@@ -247,12 +244,12 @@
       },
       "order_type": null,
       "dropoff_reason": null,
-      "checkout_status": "abandoned",
-      "revenue_loss": 109.95,
+      "checkout_status": "success",
+      "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User viewed product details for Fjallraven - Foldsack No. 1 Backpack, added it to cart successfully, and the cart contains multiple items including clothing and electronics with a total cost of 109.95. User's action indicates potential sales loss due to abandonment.",
+      "summary": "User viewed product detail page for Fjallraven - Foldsack No. 1 Backpack, added Fjallraven - Foldsack No. 1 Backpack (USD 109.95 x1) to cart successfully! Cart total USD 109.95 (1 items).",
       "duration_ms": 9627,
-      "document": "User viewed product details for Fjallraven - Foldsack No. 1 Backpack, added it to cart successfully, and the cart contains multiple items including clothing and electronics with a total cost of 109.95. User's action indicates potential sales loss due to abandonment.\n\nEvent Types: navigation, click, input\nIssue Types: None\nFunnel Step: add_to_cart\nError Types: None\nPayment Method: N/A\nCart Items Value: {\"Fjallraven - Foldsack No. 1 Backpack\":{\"currency\":\"$\",\"cost\":109.95,\"quantity\":1}}\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\nRevenue Loss: 109.95\nPotential Sales Loss: N/A\n\nTotal Events: 5\nDuration: 9627ms",
+      "document": "User viewed product detail page for Fjallraven - Foldsack No. 1 Backpack, added Fjallraven - Foldsack No. 1 Backpack (USD 109.95 x1) to cart successfully! Cart total USD 109.95 (1 items).\n\nEvent Types: navigation, click, input\nIssue Types: None\nFunnel Step: add_to_cart\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: Cart Total: $ 109.95 (1 items) - Base: 109.95, Shipping: 0, Tax: 0, Discount: 0\nCart Items: Fjallraven - Foldsack No. 1 Backpack: $ 109.95 x1 (Total: $ 109.95)\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 5\n- Duration: 9627ms",
       "timestamp_start": 1756305451886,
       "timestamp_end": 1756305461513
     },
@@ -265,8 +262,8 @@
       "country": null,
       "issue_type": [],
       "event_type": [
-        "click",
         "navigation",
+        "click",
         "input"
       ],
       "payment_method": null,
@@ -274,7 +271,7 @@
       "error_type": [],
       "cart_value": {
         "currency": "$",
-        "cost": 109.95,
+        "cost": 124.74,
         "total_items": 1,
         "shipping_cost": 5.99,
         "tax_cost": 8.8,
@@ -284,7 +281,7 @@
         "total_cost": 124.74
       },
       "cart_items_cost": {
-        "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops": {
+        "Fjallraven - Foldsack No. 1 Backpack": {
           "currency": "$",
           "cost": 109.95,
           "quantity": 1
@@ -295,9 +292,9 @@
       "checkout_status": "abandoned",
       "revenue_loss": 124.74,
       "potential_sales_loss": 124.74,
-      "summary": "User viewed a product, clicked on 'Add to Cart', navigated to the cart, and then viewed the cart contents including a Fjallraven backpack priced at 109.95. User clicked on 'Continue Shopping' but did not proceed to checkout, resulting in potential sales loss of 124.74.",
+      "summary": "User navigated to products page, clicked on the fail mode checkbox, and then clicked on the cart button. User navigated to the cart page, viewed cart items including Fjallraven - Foldsack No. 1 Backpack (USD 109.95 x1) and others, with a total cart value of USD 124.74. User viewed the shopping cart and considered continuing shopping but did not proceed to checkout, resulting in potential sales loss of 124.74.",
       "duration_ms": 10070,
-      "document": "User viewed a product, clicked on 'Add to Cart', navigated to the cart, and then viewed the cart contents including a Fjallraven backpack priced at 109.95. User clicked on 'Continue Shopping' but did not proceed to checkout, resulting in potential sales loss of 124.74.\n\nEvent Types: click, navigation, input\nIssue Types: None\nFunnel Step: cart_view\nError Types: None\nPayment Method: N/A\nCart Items Value: {\"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops\":{\"currency\":\"$\",\"cost\":109.95,\"quantity\":1}}\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: abandoned\nRevenue Loss: 124.74\nPotential Sales Loss: 124.74\n\nTotal Events: 12\nDuration: 10070ms",
+      "document": "User navigated to products page, clicked on the fail mode checkbox, and then clicked on the cart button. User navigated to the cart page, viewed cart items including Fjallraven - Foldsack No. 1 Backpack (USD 109.95 x1) and others, with a total cart value of USD 124.74. User viewed the shopping cart and considered continuing shopping but did not proceed to checkout, resulting in potential sales loss of 124.74.\n\nEvent Types: navigation, click, input\nIssue Types: None\nFunnel Step: cart_view\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: abandoned\n\nCart Details: Cart Total: $ 124.74 (1 items) - Base: 124.74, Shipping: 5.99, Tax: 8.8, Discount: 0\nCart Items: Fjallraven - Foldsack No. 1 Backpack: $ 109.95 x1 (Total: $ 109.95)\n\nFinancial Impact:\n- Revenue Loss: 124.74\n- Potential Sales Loss: 124.74\n\nSession Metrics:\n- Total Events: 12\n- Duration: 10070ms",
       "timestamp_start": 1756305461513,
       "timestamp_end": 1756305471583
     },
@@ -309,7 +306,7 @@
       "device_type": null,
       "country": null,
       "issue_type": [
-        "api_call"
+        "api_###"
       ],
       "event_type": [
         "navigation",
@@ -325,13 +322,13 @@
       "cart_value": null,
       "cart_items_cost": null,
       "order_type": null,
-      "dropoff_reason": "sku_failed_orders",
+      "dropoff_reason": "checkout_drop",
       "checkout_status": "failed",
-      "revenue_loss": 15.99,
-      "potential_sales_loss": 15.99,
-      "summary": "User navigated to the products page. User viewed product details including various items. User attempted to add 'Mens Casual Premium Slim Fit T-Shirts' to cart but failed due to an error. Error message indicates failure to add to cart, leading to potential revenue loss.",
+      "revenue_loss": null,
+      "potential_sales_loss": null,
+      "summary": "User navigated to products page. User viewed product details including 'Fjallraven - Foldsack No. 1 Backpack'. User attempted to add 'Mens Casual Premium Slim Fit T-Shirts' to cart, but the action failed with an error message. User experienced a checkout failure with potential revenue loss due to the failed add to cart action.",
       "duration_ms": 3037,
-      "document": "User navigated to the products page. User viewed product details including various items. User attempted to add 'Mens Casual Premium Slim Fit T-Shirts' to cart but failed due to an error. Error message indicates failure to add to cart, leading to potential revenue loss.\n\nEvent Types: navigation, textContent, click, error\nIssue Types: api_call\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: sku_failed_orders\nCheckout Status: failed\nRevenue Loss: 15.99\nPotential Sales Loss: 15.99\n\nTotal Events: 15\nDuration: 3037ms",
+      "document": "User navigated to products page. User viewed product details including 'Fjallraven - Foldsack No. 1 Backpack'. User attempted to add 'Mens Casual Premium Slim Fit T-Shirts' to cart, but the action failed with an error message. User experienced a checkout failure with potential revenue loss due to the failed add to cart action.\n\nEvent Types: navigation, textContent, click, error\nIssue Types: api_###\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: failed\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 15\n- Duration: 3037ms",
       "timestamp_start": 1756305471583,
       "timestamp_end": 1756305474620
     },
@@ -347,7 +344,8 @@
       ],
       "event_type": [
         "api_call",
-        "textContent"
+        "navigation",
+        "input"
       ],
       "payment_method": null,
       "funnel_step": null,
@@ -355,13 +353,13 @@
       "cart_value": null,
       "cart_items_cost": null,
       "order_type": null,
-      "dropoff_reason": "checkout_drop",
-      "checkout_status": "abandoned",
+      "dropoff_reason": null,
+      "checkout_status": "failed",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User attempted to add an item to the cart via API call but received a 404 error, indicating a potential issue with the cart functionality. User viewed multiple products, including men's clothing and electronics, but did not successfully add any items to the cart, leading to a checkout abandonment with potential sales loss.",
+      "summary": "User attempted to add an item to the cart via API call but received a 404 error. User viewed product details for various items including men's clothing and electronics. User interacted with multiple product options but did not successfully add any items to the cart, resulting in a potential sales loss due to the failed API call.",
       "duration_ms": 12011,
-      "document": "User attempted to add an item to the cart via API call but received a 404 error, indicating a potential issue with the cart functionality. User viewed multiple products, including men's clothing and electronics, but did not successfully add any items to the cart, leading to a checkout abandonment with potential sales loss.\n\nEvent Types: api_call, textContent\nIssue Types: api_404\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: abandoned\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 3\nDuration: 12011ms",
+      "document": "User attempted to add an item to the cart via API call but received a 404 error. User viewed product details for various items including men's clothing and electronics. User interacted with multiple product options but did not successfully add any items to the cart, resulting in a potential sales loss due to the failed API call.\n\nEvent Types: api_call, navigation, input\nIssue Types: api_404\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: failed\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 3\n- Duration: 12011ms",
       "timestamp_start": 1756305474620,
       "timestamp_end": 1756305486631
     },
@@ -378,24 +376,40 @@
       "event_type": [
         "navigation",
         "click",
-        "error",
-        "api_call"
+        "api_call",
+        "error"
       ],
       "payment_method": null,
       "funnel_step": "add_to_cart",
       "error_type": [
         "js_error"
       ],
-      "cart_value": null,
-      "cart_items_cost": null,
+      "cart_value": {
+        "currency": "$",
+        "cost": 55.99,
+        "total_items": 1,
+        "shipping_cost": null,
+        "tax_cost": null,
+        "discount_cost": null,
+        "discount_percentage": null,
+        "discount_coupon": null,
+        "total_cost": 55.99
+      },
+      "cart_items_cost": {
+        "Mens Cotton Jacket": {
+          "currency": "$",
+          "cost": 55.99,
+          "quantity": 1
+        }
+      },
       "order_type": null,
       "dropoff_reason": "sku_failed_orders",
       "checkout_status": "failed",
       "revenue_loss": 55.99,
-      "potential_sales_loss": 55.99,
-      "summary": "User viewed product details, clicked 'Add to Cart', but encountered an error while adding 'Mens Cotton Jacket' to cart, resulting in a failed attempt with potential revenue loss. User's action to add to cart was unsuccessful due to a 404 error from the API call.",
+      "potential_sales_loss": null,
+      "summary": "User viewed product details, clicked 'Add to Cart' button, but failed to add 'Mens Cotton Jacket' to cart due to an error. API call to add item to cart returned 404 status, indicating a potential revenue loss of 55.99.",
       "duration_ms": 8023,
-      "document": "User viewed product details, clicked 'Add to Cart', but encountered an error while adding 'Mens Cotton Jacket' to cart, resulting in a failed attempt with potential revenue loss. User's action to add to cart was unsuccessful due to a 404 error from the API call.\n\nEvent Types: navigation, click, error, api_call\nIssue Types: api_404\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: sku_failed_orders\nCheckout Status: failed\nRevenue Loss: 55.99\nPotential Sales Loss: 55.99\n\nTotal Events: 6\nDuration: 8023ms",
+      "document": "User viewed product details, clicked 'Add to Cart' button, but failed to add 'Mens Cotton Jacket' to cart due to an error. API call to add item to cart returned 404 status, indicating a potential revenue loss of 55.99.\n\nEvent Types: navigation, click, api_call, error\nIssue Types: api_404\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: sku_failed_orders\nCheckout Status: failed\n\nCart Details: Cart Total: $ 55.99 (1 items) - Base: 55.99, Shipping: 0, Tax: 0, Discount: 0\nCart Items: Mens Cotton Jacket: $ 55.99 x1 (Total: $ 55.99)\n\nFinancial Impact:\n- Revenue Loss: 55.99\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 6\n- Duration: 8023ms",
       "timestamp_start": 1756305486631,
       "timestamp_end": 1756305494654
     },
@@ -421,21 +435,15 @@
         "js_error"
       ],
       "cart_value": null,
-      "cart_items_cost": {
-        "Mens Casual Slim Fit": {
-          "currency": "$",
-          "cost": 15.99,
-          "quantity": 1
-        }
-      },
+      "cart_items_cost": null,
       "order_type": null,
-      "dropoff_reason": "sku_failed_orders",
+      "dropoff_reason": "checkout_drop",
       "checkout_status": "failed",
-      "revenue_loss": 15.99,
+      "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User viewed the product detail page for 'Mens Casual Slim Fit' and clicked 'Add to Cart'. An error occurred while attempting to add the item to the cart, resulting in a failed action. The error message indicated that the item could not be added to the cart, leading to a potential revenue loss of 15.99.",
+      "summary": "User viewed product page for 'Mens Casual Slim Fit' and clicked 'Add to Cart', but encountered an error while adding to cart. Error message indicated failure to add the item. The API call to add the item to the cart returned a 404 status, indicating a potential issue with the cart functionality.",
       "duration_ms": 72646,
-      "document": "User viewed the product detail page for 'Mens Casual Slim Fit' and clicked 'Add to Cart'. An error occurred while attempting to add the item to the cart, resulting in a failed action. The error message indicated that the item could not be added to the cart, leading to a potential revenue loss of 15.99.\n\nEvent Types: navigation, click, error, api_call\nIssue Types: api_404\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nCart Items Value: {\"Mens Casual Slim Fit\":{\"currency\":\"$\",\"cost\":15.99,\"quantity\":1}}\nOrder Type: N/A\nDropoff Reason: sku_failed_orders\nCheckout Status: failed\nRevenue Loss: 15.99\nPotential Sales Loss: N/A\n\nTotal Events: 7\nDuration: 72646ms",
+      "document": "User viewed product page for 'Mens Casual Slim Fit' and clicked 'Add to Cart', but encountered an error while adding to cart. Error message indicated failure to add the item. The API call to add the item to the cart returned a 404 status, indicating a potential issue with the cart functionality.\n\nEvent Types: navigation, click, error, api_call\nIssue Types: api_404\nFunnel Step: add_to_cart\nError Types: js_error\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: checkout_drop\nCheckout Status: failed\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 7\n- Duration: 72646ms",
       "timestamp_start": 1756305494654,
       "timestamp_end": 1756305567300
     },
@@ -449,22 +457,42 @@
       "issue_type": [],
       "event_type": [
         "navigation",
-        "visibility visible",
-        "textContent"
+        "input"
       ],
       "payment_method": null,
-      "funnel_step": "product_detail_view_page",
+      "funnel_step": "add_to_cart",
       "error_type": [],
-      "cart_value": null,
-      "cart_items_cost": null,
+      "cart_value": {
+        "currency": "$",
+        "cost": 31.98,
+        "total_items": 2,
+        "shipping_cost": null,
+        "tax_cost": null,
+        "discount_cost": null,
+        "discount_percentage": null,
+        "discount_coupon": null,
+        "total_cost": 31.98
+      },
+      "cart_items_cost": {
+        "Mens Casual Premium Slim Fit T-Shirts": {
+          "currency": "$",
+          "cost": 15.99,
+          "quantity": 1
+        },
+        "Mens Casual Slim Fit": {
+          "currency": "$",
+          "cost": 15.99,
+          "quantity": 1
+        }
+      },
       "order_type": null,
       "dropoff_reason": null,
       "checkout_status": "success",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the products page. User's session remained active. User viewed product details including various items and their descriptions.",
+      "summary": "User navigated to products page, viewed various items including Fjallraven - Foldsack No. 1 Backpack, added Mens Casual Premium Slim Fit T-Shirts (USD 15.99 x1) to cart, and Mens Casual Slim Fit (USD 15.99 x1) to cart, total cart value USD 31.98 (2 items).",
       "duration_ms": 460968,
-      "document": "User navigated to the products page. User's session remained active. User viewed product details including various items and their descriptions.\n\nEvent Types: navigation, visibility visible, textContent\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 4\nDuration: 460968ms",
+      "document": "User navigated to products page, viewed various items including Fjallraven - Foldsack No. 1 Backpack, added Mens Casual Premium Slim Fit T-Shirts (USD 15.99 x1) to cart, and Mens Casual Slim Fit (USD 15.99 x1) to cart, total cart value USD 31.98 (2 items).\n\nEvent Types: navigation, input\nIssue Types: None\nFunnel Step: add_to_cart\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: Cart Total: $ 31.98 (2 items) - Base: 31.98, Shipping: 0, Tax: 0, Discount: 0\nCart Items: Mens Casual Premium Slim Fit T-Shirts: $ 15.99 x1 (Total: $ 15.99); Mens Casual Slim Fit: $ 15.99 x1 (Total: $ 15.99)\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 4\n- Duration: 460968ms",
       "timestamp_start": 1756305567300,
       "timestamp_end": 1756306028268
     },
@@ -478,22 +506,22 @@
       "issue_type": [],
       "event_type": [
         "navigation",
-        "visibility visible",
+        "visibility",
         "textContent"
       ],
       "payment_method": null,
-      "funnel_step": "product_detail_view_page",
+      "funnel_step": null,
       "error_type": [],
       "cart_value": null,
       "cart_items_cost": null,
       "order_type": null,
       "dropoff_reason": null,
-      "checkout_status": "success",
+      "checkout_status": "abandoned",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the products page. User's session is active. User viewed product details including various items and their prices.",
+      "summary": "User navigated to products page, session continued with visibility visible. User viewed product details including various items and prices. No cart actions were taken, and no checkout process was initiated.",
       "duration_ms": 127919,
-      "document": "User navigated to the products page. User's session is active. User viewed product details including various items and their prices.\n\nEvent Types: navigation, visibility visible, textContent\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 3\nDuration: 127919ms",
+      "document": "User navigated to products page, session continued with visibility visible. User viewed product details including various items and prices. No cart actions were taken, and no checkout process was initiated.\n\nEvent Types: navigation, visibility, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: abandoned\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 3\n- Duration: 127919ms",
       "timestamp_start": 1756306028268,
       "timestamp_end": 1756306156187
     },
@@ -507,11 +535,11 @@
       "issue_type": [],
       "event_type": [
         "navigation",
-        "visibility visible",
+        "visibility",
         "textContent"
       ],
       "payment_method": null,
-      "funnel_step": null,
+      "funnel_step": "product_detail_view_page",
       "error_type": [],
       "cart_value": null,
       "cart_items_cost": null,
@@ -520,9 +548,9 @@
       "checkout_status": "success",
       "revenue_loss": null,
       "potential_sales_loss": null,
-      "summary": "User navigated to the products page. User session is active. User viewed product details including various items. No cart actions were taken.",
+      "summary": "User navigated to products page, session continued with visibility visible. User viewed product details including various items and their descriptions.",
       "duration_ms": 2285,
-      "document": "User navigated to the products page. User session is active. User viewed product details including various items. No cart actions were taken.\n\nEvent Types: navigation, visibility visible, textContent\nIssue Types: None\nFunnel Step: N/A\nError Types: None\nPayment Method: N/A\nCart Items Value: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\nRevenue Loss: N/A\nPotential Sales Loss: N/A\n\nTotal Events: 3\nDuration: 2285ms",
+      "document": "User navigated to products page, session continued with visibility visible. User viewed product details including various items and their descriptions.\n\nEvent Types: navigation, visibility, textContent\nIssue Types: None\nFunnel Step: product_detail_view_page\nError Types: None\nPayment Method: N/A\nOrder Type: N/A\nDropoff Reason: N/A\nCheckout Status: success\n\nCart Details: No cart data available\nCart Items: No cart items data available\n\nFinancial Impact:\n- Revenue Loss: N/A\n- Potential Sales Loss: N/A\n\nSession Metrics:\n- Total Events: 3\n- Duration: 2285ms",
       "timestamp_start": 1756306156187,
       "timestamp_end": 1756306158472
     }

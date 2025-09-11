@@ -109,6 +109,18 @@ export default function App() {
         }
     };
 
+    // Add state for customerId and apiKey
+    const [customerId, setCustomerId] = useState<number | undefined>(undefined);
+    const [apiKey, setApiKey] = useState<string | undefined>(undefined);
+
+    // Load customerId and apiKey from localStorage on mount
+    useEffect(() => {
+        const savedCustomerId = localStorage.getItem('customerId');
+        const savedApiKey = localStorage.getItem('apiKey');
+        if (savedCustomerId) setCustomerId(parseInt(savedCustomerId));
+        if (savedApiKey) setApiKey(savedApiKey);
+    }, []);
+
     const handleSendMessage = async (content: string) => {
         if (!currentSessionId) return;
 
@@ -131,7 +143,9 @@ export default function App() {
 
         try {
             const response = await axios.post(`${API_BASE_URL}/chat/${currentSessionId}`, {
-                message: content
+                message: content,
+                customerId : 2000,
+                apiKey
             });
 
             const assistantMessage: ChatMessageType = {
@@ -157,6 +171,17 @@ export default function App() {
             ));
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleUpdateCredentials = (newCustomerId: number | undefined, newApiKey: string | undefined) => {
+        if (newCustomerId !== undefined) {
+            setCustomerId(newCustomerId);
+            localStorage.setItem('customerId', newCustomerId.toString());
+        }
+        if (newApiKey !== undefined) {
+            setApiKey(newApiKey);
+            localStorage.setItem('apiKey', newApiKey);
         }
     };
 

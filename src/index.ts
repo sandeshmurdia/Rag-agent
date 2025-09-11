@@ -91,8 +91,15 @@ app.post('/api/chat/:sessionId', async (req, res) => {
         const userMessage: ChatMessage = { role: 'user', content: message };
         await storeChatMessage(sessionId, userMessage);
 
-        // Get response from agent
-        const response = await askQuestion(message);
+        // Get response from agent with metadata filters
+        const response = await askQuestion(
+            message,
+            10, // topK
+            {}, // base filters
+            false, // rawOnly
+            req.body.customerId, // optional customerId
+            req.body.apiKey // optional apiKey
+        );
 
         // Store assistant message
         const assistantMessage: ChatMessage = { role: 'assistant', content: response };

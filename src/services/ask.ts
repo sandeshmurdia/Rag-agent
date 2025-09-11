@@ -347,11 +347,15 @@ async function queryRag(
  * @param rawOnly - Whether to return raw results without AI processing
  * @returns The answer string
  */
+import { generateMetadataFilters } from './metadata';
+
 export async function askQuestion(
   question: string, 
   topK: number = 10,
-  where?: Record<string, any>,
-  rawOnly: boolean = false
+  where: Record<string, any> = {},
+  rawOnly: boolean = false,
+  customerId?: number,
+  apiKey?: string
 ): Promise<string> {
   try {
     /*
@@ -371,8 +375,13 @@ export async function askQuestion(
 
     const enhancedQuestion = await enhanceQuestion(question);
     console.log('Enhanced question:', enhancedQuestion);
+
+    // Generate metadata filters based on the question
+    const metadataFilters = await generateMetadataFilters(question, customerId, apiKey);
+    const combinedFilters = { ...where, ...metadataFilters };
+    console.log('Using metadata filters:', combinedFilters);
     
-    const rawAnswer = await queryRag(enhancedQuestion, topK, where, rawOnly);
+    const rawAnswer = await queryRag(enhancedQuestion, topK, combinedFilters, rawOnly);
     console.log('Raw answer:', rawAnswer);
     
     // Only enhance the answer if we have actual content and not in raw mode

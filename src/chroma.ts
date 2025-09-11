@@ -157,10 +157,13 @@ export async function queryTopK(
   console.log(`Querying collection for top ${topK} results...`);
   
   return withRetry(async () => {
+console.log('Where:', where);
+console.log('Query Embedding:', queryEmbedding);
+console.log('Top K:', topK);
     const response = await collection.query({
       queryEmbeddings: [queryEmbedding],
       nResults: topK,
-      where,
+      where
     });
     
     // Transform response to our interface
