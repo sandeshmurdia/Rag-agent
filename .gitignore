@@ -68,3 +68,5 @@ chromadb-env/*
 chroma-env/
 chroma-env/*
 chroma-env/*
+
+src/chunk-sessions/*

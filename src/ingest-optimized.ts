@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { ChromaClient } from 'chromadb';
 import { config } from './config';
 import { getEmbedding } from './embeddings';
@@ -200,9 +200,43 @@ async function ingestSemanticChunks(filePath: string) {
   }
 }
 
-// Get file path from command line or use default
-const filePath = process.argv[2] || path.join(__dirname, '2.json');
+async function ingestAllChunks() {
+    const chunksDir = path.join(__dirname, 'chunk-sessions');
+    console.info('Reading chunks directory:', chunksDir);
 
-// Run the ingestion
-console.info('Starting ingestion process...');
-ingestSemanticChunks(filePath);
+    try {
+        // Get all JSON files from the directory
+        const files = readdirSync(chunksDir)
+            .filter(file => file.endsWith('.json'))
+            .map(file => path.join(chunksDir, file));
+
+        console.info(`Found ${files.length} JSON files to process`);
+
+        // Process files sequentially to avoid overwhelming the system
+        for (const file of files) {
+            console.info('\n========================================');
+            console.info(`Processing file: ${path.basename(file)}`);
+            console.info('========================================\n');
+
+            try {
+                await ingestSemanticChunks(file);
+                console.info(`✅ Successfully processed ${path.basename(file)}\n`);
+            } catch (error) {
+                console.error(`❌ Error processing ${path.basename(file)}:`, error);
+                // Continue with next file even if one fails
+                continue;
+            }
+        }
+
+        console.info('\n✨ Completed processing all files!');
+        console.info(`Total files processed: ${files.length}`);
+
+    } catch (error) {
+        console.error('Error reading chunks directory:', error);
+        process.exit(1);
+    }
+}
+
+// Run the ingestion for all files
+console.info('Starting bulk ingestion process...');
+ingestAllChunks();
