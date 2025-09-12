@@ -33,6 +33,83 @@ async function validateQuestion(question: string): Promise<{ isValid: boolean; m
 - Revenue impact of payment issues
 - Cart abandonment and conversion
 - Any other question that is related to checkout flow, payment processing, revenue impact, total revenue, user behavior, error, otp , funnel steps, dropoff reason, checkout status or transaction metrics
+- User can ask any question like why, how, what caused this, etc.
+- User can ask about any production that how much did it got sold, how much revenue did it generate, how much revenue did it lose, etc.
+- User can ask about any payment that how much did it got paid, how much did it lose, etc.
+- User can ask about any checkout that how much did it got completed, how much did it lose, etc.
+- User can ask about any user that how much did they spent, how much did they lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any user behavior that how much did it get completed, how much did it lose, etc.
+- User can ask about any error that how much did it occur, how much did it lose, etc.
+- User can ask about any otp that how much did it get verified, how much did it lose, etc.
+- User can ask about any funnel step that how much did it get completed, how much did it lose, etc.
+- User can ask about any dropoff reason that how much did it get dropped off, how much did it lose, etc.
+- User can ask about any checkout status that how much did it get completed, how much did it lose, etc.
+- User can ask about any transaction metric that how much did it get completed, how much did it lose, etc.
+- User can ask about any session id information.
+- User can ask on any product.
+- User can ask question about inventory.
 
 If question is NOT about these topics, explain why and suggest 2 relevant example questions.
 
@@ -121,111 +198,110 @@ const openai = new OpenAI({
 });
 
 function buildSystemPrompt(): string {
-  return `You are an expert e-commerce analytics assistant. Your role is to analyze checkout flows, payment patterns, and revenue impact from session data.
-
-IMPORTANT GUIDELINES:
-
-1. CONTENT FOCUS:
-- Use ONLY the provided context to answer questions
-- If data is insufficient, say "I don't have enough information to answer this question"
-- Focus on revenue impact, conversion metrics, and actionable insights
-- Highlight critical patterns and anomalies
-- Create Zipy session links in format: <a href="https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}" target="_blank">View Session</a>
-- Always include a "Sessions" section at the end listing all relevant sessions with their context
-- When mentioning sessions, include revenue impact (loss/gain) and key metrics
-
-2. DATA PRESENTATION:
-- For numerical data, use clean HTML tables with proper styling. Example table structure:
-  <table style="width:100%; border-collapse:collapse; margin:10px 0;"><tr style="background:#f5f5f5"><th style="padding:8px; border:1px solid #ddd; text-align:left">Metric</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Value</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Change</th></tr><tr><td style="padding:8px; border:1px solid #ddd">Revenue</td><td style="padding:8px; border:1px solid #ddd; text-align:right">$1,000</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↑ 5%</td></tr></table>
-- Use bullet points for listing issues or recommendations
-- Include trend indicators (↑↓→) where relevant
-- Format currency values consistently with $ and commas
-- The numbers and metrics should be 100% accurate and correct with full context of the data.
-
-3. ANSWER STRUCTURE:
-- Start with a clear summary of key findings
-- Group related metrics together
-- Present data in order of business impact
-- End with actionable recommendations if applicable
-
-4. FORMATTING RULES:
-- Use **bold** for important metrics and KPIs
-- Use \`code\` for error codes or technical details
-- Create tables for comparing metrics:
-  | Metric | Value | Change |
-  |--------|--------|--------|
-  | Example | 100 | ↑ 5% |
-- Use > for highlighting critical insights
-- Use ### for section headers
-
-5. SPECIFIC DATA TYPES:
-- Revenue: Always include % change
-- Errors: Group by type/gateway
-- Time metrics: Show trends
-- Conversion: Show funnel steps
-
-Example Answer Format:
-### Summary
-> Key insight or critical finding
-
-**Metrics Overview:**
-<table style="width:100%; border-collapse:collapse; margin:10px 0;"><tr style="background:#f5f5f5"><th style="padding:8px; border:1px solid #ddd; text-align:left">Metric</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Current</th><th style="padding:8px; border:1px solid #ddd; text-align:right">vs Previous</th></tr><tr><td style="padding:8px; border:1px solid #ddd">Revenue</td><td style="padding:8px; border:1px solid #ddd; text-align:right">$10,000</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↑ 15%</td></tr><tr><td style="padding:8px; border:1px solid #ddd">Conversion</td><td style="padding:8px; border:1px solid #ddd; text-align:right">2.4%</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↓ 0.3%</td></tr></table>
-
-### Detailed Analysis
-• Finding 1 - In session <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123" target="_blank">View Details</a>
-• Finding 2 - Across multiple sessions (see Sessions section)
-
-### Technical Details
-Error Code: \`ERR_GATEWAY_TIMEOUT\`
-
-### Recommendations
-1. Action item 1
-2. Action item 2
-
-### Sessions
-#### Revenue Gained Sessions
-1. **$200** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session789" target="_blank">View Session</a>
-   - **Status**: Completed
-   - **Payment Method**: Credit Card
-   - **Funnel Step**: Checkout completed
-
-#### Revenue Lost Sessions
-1. **$110** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123" target="_blank">View Session</a>
-   - **Status**: Abandoned
-   - **Payment Method**: Credit Card
-   - **Funnel Step**: Payment gateway
-   - **Error**: Gateway timeout
-
-2. **$120** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session456" target="_blank">View Session</a>
-   - **Status**: Failed
-   - **Payment Method**: UPI
-   - **Funnel Step**: OTP verification
-   - **Error**: Bank declined`;
+  return "You are an expert e-commerce analytics assistant. Your role is to analyze checkout flows, payment patterns, and revenue impact from session data.\n\n" +
+    "IMPORTANT GUIDELINES:\n\n" +
+    "1. CONTENT FOCUS:\n" +
+    "- Use ONLY the provided context to answer questions\n" +
+    "- If data is insufficient, say \"I don't have enough information to answer this question\"\n" +
+    "- Focus on revenue impact, conversion metrics, and actionable insights\n" +
+    "- Highlight critical patterns and anomalies\n" +
+    "- Create Zipy session links in format: <a href=\"https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}\" target=\"_blank\">View Session</a>\n" +
+    "- Always include a \"Sessions\" section at the end listing all relevant sessions with their context\n" +
+    "- When mentioning sessions, include revenue impact (loss/gain) and key metrics\n\n" +
+    "2. DATA PRESENTATION:\n" +
+    "- For numerical data, use clean HTML tables with proper styling. Example table structure:\n" +
+    "  <table style=\"width:100%; border-collapse:collapse; margin:10px 0;\"><tr style=\"background:#f5f5f5\"><th style=\"padding:8px; border:1px solid #ddd; text-align:left\">Metric</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Value</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Change</th></tr><tr><td style=\"padding:8px; border:1px solid #ddd\">Revenue</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">$1,000</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">↑ 5%</td></tr></table>\n" +
+    "- Use bullet points for listing issues or recommendations\n" +
+    "- Include trend indicators (↑↓→) where relevant\n" +
+    "- Format currency values consistently with $ and commas\n" +
+    "- The numbers and metrics should be 100% accurate and correct with full context of the data.\n\n" +
+    "3. ANSWER STRUCTURE:\n" +
+    "- Start with a clear summary of key findings\n" +
+    "- Group related metrics together\n" +
+    "- Present data in order of business impact\n" +
+    "- End with actionable recommendations if applicable\n\n" +
+    "4. FORMATTING RULES:\n" +
+    "- Use **bold** for important metrics and KPIs\n" +
+    "- Use `code` for error codes or technical details\n" +
+    "- Create tables for comparing metrics:\n" +
+    "  | Metric | Value | Change |\n" +
+    "  |--------|--------|--------|\n" +
+    "  | Example | 100 | ↑ 5% |\n" +
+    "- Use > for highlighting critical insights\n" +
+    "- Use ### for section headers\n\n" +
+    "5. SPECIFIC DATA TYPES:\n" +
+    "- Revenue: Always include % change\n" +
+    "- Errors: Group by type/gateway\n" +
+    "- Time metrics: Show trends\n" +
+    "- Conversion: Show funnel steps\n\n" +
+    "Example Answer Format:\n" +
+    "### Summary\n" +
+    "> Key insight or critical finding\n\n" +
+    "**Metrics Overview:**\n" +
+    "<table style=\"width:100%; border-collapse:collapse; margin:10px 0;\"><tr style=\"background:#f5f5f5\"><th style=\"padding:8px; border:1px solid #ddd; text-align:left\">Metric</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Current</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">vs Previous</th></tr><tr><td style=\"padding:8px; border:1px solid #ddd\">Revenue</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">$10,000</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">↑ 15%</td></tr><tr><td style=\"padding:8px; border:1px solid #ddd\">Conversion</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">2.4%</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">↓ 0.3%</td></tr></table>\n\n" +
+    "### Detailed Analysis\n" +
+    "• Finding 1 - In session <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123\" target=\"_blank\">View Details</a>\n" +
+    "• Finding 2 - Across multiple sessions (see Sessions section)\n\n" +
+    "### Technical Details\n" +
+    "Error Code: `ERR_GATEWAY_TIMEOUT`\n\n" +
+    "### Recommendations\n" +
+    "1. Action item 1\n" +
+    "2. Action item 2\n\n" +
+    "```markdown\n" +
+    "### Sessions\n" +
+    "#### Revenue Gained Sessions\n" +
+    "1. **$200** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session789\" target=\"_blank\">View Session</a>\n" +
+    "   - **Status**: Completed\n" +
+    "   - **Items**: 1x iPhone 15 Pro ($999), 2x AirPods Pro ($249 each)\n" +
+    "   - **Total Items**: 3\n" +
+    "   - **Cart Value**: $1,497\n" +
+    "   - **Payment Method**: Credit Card\n" +
+    "   - **Funnel Step**: Checkout completed\n" +
+    "   - **Timestamp**: 2025-09-11 12:45:23 UTC\n\n" +
+    "#### Revenue Lost Sessions\n" +
+    "1. **$1,099** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123\" target=\"_blank\">View Session</a>\n" +
+    "   - **Status**: Abandoned\n" +
+    "   - **Items**: 1x MacBook Air ($1,099)\n" +
+    "   - **Total Items**: 1\n" +
+    "   - **Cart Value**: $1,099\n" +
+    "   - **Payment Method**: Credit Card\n" +
+    "   - **Funnel Step**: Payment gateway\n" +
+    "   - **Error**: Gateway timeout\n" +
+    "   - **Timestamp**: 2025-09-11 13:20:15 UTC\n" +
+    "   - **Revenue Impact**: Potential loss of $1,099 due to payment gateway timeout\n\n" +
+    "2. **$927** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session456\" target=\"_blank\">View Session</a>\n" +
+    "   - **Status**: Failed\n" +
+    "   - **Items**: 2x iPad Mini ($399 each), 1x Apple Pencil ($129)\n" +
+    "   - **Total Items**: 3\n" +
+    "   - **Cart Value**: $927\n" +
+    "   - **Payment Method**: UPI\n" +
+    "   - **Funnel Step**: OTP verification\n" +
+    "   - **Error**: Bank declined\n" +
+    "   - **Timestamp**: 2025-09-11 14:10:45 UTC\n" +
+    "   - **Revenue Impact**: Lost sale of $927 due to payment failure at OTP step\n\n" +
+    "Note: Multiple sessions with same items are grouped together to show cumulative impact.\n" +
+    "```";
 }
 
 function buildUserPrompt(question: string, results: QueryResult[]): string {
   if (results.length === 0) {
-    return `Question: ${question}\n\nContext: No relevant information found in the session data.`;
+    return "Question: " + question + "\n\nContext: No relevant information found in the session data.";
   }
   
   const contextParts = results.map((result, index) => {
     const metadata = result.metadata || {};
-    const sessionId = metadata.sessionId || 'unknown';
+    const sessionId = metadata.sessionId || "unknown";
     
-    return `--- Context ${index + 1} [Session: ${sessionId}] ---  
-Distance: ${result.distance ? result.distance.toFixed(4) : 'N/A'}
-Metadata: ${JSON.stringify(metadata, null, 2)}
-Content:
-${result.text}
---- End Context ${index + 1} ---`;
+    return "--- Context " + (index + 1) + " [Session: " + sessionId + "] ---\n" +
+           "Distance: " + (result.distance ? result.distance.toFixed(4) : "N/A") + "\n" +
+           "Metadata: " + JSON.stringify(metadata, null, 2) + "\n" +
+           "Content:\n" + result.text + "\n" +
+           "--- End Context " + (index + 1) + " ---";
   });
   
-  return `Question: ${question}
-
-Context:
-${contextParts.join('\n\n')}
-
-Please analyze the above context and answer the question. When referencing specific information, cite the chunkIndex in brackets [chunkIndex: X].`;
+  return "Question: " + question + "\n\n" +
+         "Context:\n" + contextParts.join("\n\n") + "\n\n" +
+         "Please analyze the above context and answer the question. When referencing specific information, cite the chunkIndex in brackets [chunkIndex: X].";
 }
 
 /**
@@ -236,78 +312,74 @@ Please analyze the above context and answer the question. When referencing speci
  */
 async function enhanceAnswer(answer: string, question: string): Promise<string> {
   try {
-    const systemPrompt = `You are an expert e-commerce data formatter. Your task is to enhance and structure the given answer.
-Format the answer following these rules:
+    const systemPrompt = "You are an expert e-commerce data formatter. Your task is to enhance and structure the given answer.\n" +
+      "Format the answer following these rules:\n\n" +
+      "1. Structure:\n" +
+      "- Start with a clear summary\n" +
+      "- Group related metrics\n" +
+      "- Present data in order of impact\n" +
+      "- End with recommendations if any\n\n" +
+      "2. Formatting:\n" +
+      "- Use tables for numerical data if available and there should not be extra data in the table from its own.\n" +
+      "- Use bullet points for lists\n" +
+      "- Include trend indicators (↑↓→)\n" +
+      "- Use markdown formatting\n\n" +
+      "3. Highlight:\n" +
+      "- Bold for important metrics\n" +
+      "- Code blocks for technical details\n" +
+      "- Blockquotes for key insights\n" +
+      "- Headers for sections\n\n" +
+      "4. Data Types:\n" +
+      "- Format currencies consistently\n" +
+      "- Show % changes where available\n" +
+      "- Group errors by type\n" +
+      "- Show conversion funnels as steps\n" +
+      "- Preserve all session links in format <a href=\"https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}\" target=\"_blank\">View Session</a>\n" +
+      "- Include session links when referencing specific data\n\n" +
+      "5. Sessions Section:\n" +
+      "- Start with \"### Sessions\" header\n" +
+      "- Group sessions by outcome (based on status):\n" +
+      "  • \"#### Revenue Gained Sessions\" (status: Completed)\n" +
+      "  • \"#### Revenue Lost Sessions\" (status: Abandoned or Failed)\n" +
+      "- Sort sessions by amount (highest to lowest) within each group\n" +
+      "- For each session:\n" +
+      "  - First line: Amount in bold with link: **$200** <a href=\"...\">View Session</a>\n" +
+      "  - List details with \"-\" bullets and bold labels:\n" +
+      "    - **Status**: Completed/Abandoned/Failed\n" +
+      "    - **Items**: List all items with quantities and prices\n" +
+      "      Example: \"2x iPhone 15 ($999 each), 1x Case ($29)\"\n" +
+      "    - **Total Items**: Total number of items in cart\n" +
+      "    - **Cart Value**: Total value before tax/shipping\n" +
+      "    - **Payment Method**: The payment method used\n" +
+      "    - **Funnel Step**: The step where completed/abandoned\n" +
+      "    - **Error**: Error details if any (only for failed/abandoned)\n" +
+      "    - **Timestamp**: When the session occurred\n" +
+      "  - For abandoned/failed sessions, always explain potential revenue loss\n" +
+      "  - Group duplicate sessions and show cumulative impact\n\n" +
+      "Keep all factual information exactly the same - only enhance the formatting and structure.\n" +
+      "IMPORTANT: Always preserve session links and include the Sessions section - these are critical for data traceability.";
 
-1. Structure:
-- Start with a clear summary
-- Group related metrics
-- Present data in order of impact
-- End with recommendations if any
-
-2. Formatting:
-- Use tables for numerical data if available and there should not be extra data in the table from its own.
-- Use bullet points for lists
-- Include trend indicators (↑↓→)
-- Use markdown formatting
-
-3. Highlight:
-- Bold for important metrics
-- Code blocks for technical details
-- Blockquotes for key insights
-- Headers for sections
-
-4. Data Types:
-- Format currencies consistently
-- Show % changes where available
-- Group errors by type
-- Show conversion funnels as steps
-- Preserve all session links in format <a href="https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}" target="_blank">View Session</a>
-- Include session links when referencing specific data
-
-5. Sessions Section:
-- Start with "### Sessions" header
-- Group sessions by revenue impact:
-  • "#### Revenue Gained Sessions" section first
-  • "#### Revenue Lost Sessions" section second
-- For each session:
-  - Show amount in bold: **$200**
-  - Add view link on same line
-  - List details with "-" bullets and bold labels:
-    - **Status**: Completed/Abandoned/Failed
-    - **Payment Method**: The payment method used
-    - **Funnel Step**: The step where completed/abandoned
-    - **Error**: Error details if any (only for failed/abandoned)
-- Sort sessions by amount (highest to lowest) within each group
-
-Keep all factual information exactly the same - only enhance the formatting and structure.
-IMPORTANT: Always preserve session links and include the Sessions section - these are critical for data traceability.`;
-
-    const userPrompt = `Question: ${question}
-
-Original Answer: ${answer}
-
-Please restructure and format this answer following the guidelines. Maintain all factual information exactly as is.
-
-IMPORTANT: Only enhance the formatting and structure. Maintain all factual information exactly as is.
-           Do not add any recommendations or suggestions.
-           Enhance the answer with what is asked and available in the context.
-           I dont want (chunkIndex: x) in the answer.
-`;
+    const userPrompt = "Question: " + question + "\n\n" +
+      "Original Answer: " + answer + "\n\n" +
+      "Please restructure and format this answer following the guidelines. Maintain all factual information exactly as is.\n\n" +
+      "IMPORTANT: Only enhance the formatting and structure. Maintain all factual information exactly as is.\n" +
+      "           Do not add any recommendations or suggestions.\n" +
+      "           Enhance the answer with what is asked and available in the context.\n" +
+      "           I dont want (chunkIndex: x) in the answer.\n";
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
       ],
       temperature: 0.3,
-      max_tokens: 1500,
+      max_tokens: 1500
     });
 
     return completion.choices[0]?.message?.content?.trim() || answer;
   } catch (error) {
-    console.error('Error enhancing answer:', error);
+    console.error("Error enhancing answer:", error);
     return answer;
   }
 }
@@ -319,18 +391,18 @@ async function queryRag(
   rawOnly: boolean = false
 ): Promise<string> {
   try {
-    console.log(`Processing question: "${question}"`);
+    console.log("Processing question:", question);
     
     // Get embedding for the question
-    console.log('Getting question embedding...');
+    console.log("Getting question embedding...");
     const questionEmbedding = await getEmbedding(question);
     
     if (questionEmbedding.length === 0) {
-      throw new Error('Failed to generate embedding for question');
+      throw new Error("Failed to generate embedding for question");
     }
     
     // Get collection and query for relevant documents
-    console.log(`Querying ChromaDB collection: ${config.chroma.collection}`);
+    console.log("Querying ChromaDB collection:", config.chroma.collection);
     const collection = await getOrCreateCollection(config.chroma.collection);
     
     const results = await queryTopK(collection, questionEmbedding, topK, where);
@@ -339,7 +411,7 @@ async function queryRag(
       return "I don't have enough information in the session data to answer this question. The query didn't return any relevant context.";
     }
     
-    console.log(`Found ${results.length} relevant documents`);
+    console.log("Found", results.length, "relevant documents");
     
     if (rawOnly) {
       return "Raw mode - no AI answer generated";
@@ -350,30 +422,30 @@ async function queryRag(
     const userPrompt = buildUserPrompt(question, results);
     
     // Generate answer using OpenAI
-    console.log('Generating answer with OpenAI...');
+    console.log("Generating answer with OpenAI...");
     const completion = await openai.chat.completions.create({
       model: config.openai.chatModel,
       messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
       ],
-      temperature: 0.3, // Lower temperature for more focused answers
-      max_tokens: 1000,
+      temperature: 0.3,
+      max_tokens: 1000
     });
     
-    return completion.choices[0]?.message?.content || 'No answer generated';
+    return completion.choices[0]?.message?.content || "No answer generated";
     
   } catch (error) {
     console.error('Error querying RAG system:', error);
     
     // Provide helpful error messages
     if (error instanceof Error) {
-      if (error.message.includes('rate_limit')) {
-        throw new Error('OpenAI rate limit exceeded. Please wait and try again.');
-      } else if (error.message.includes('invalid_api_key')) {
-        throw new Error('Invalid OpenAI API key. Please check your OPENAI_API_KEY environment variable.');
-      } else if (error.message.includes('quota_exceeded')) {
-        throw new Error('OpenAI quota exceeded. Please check your account usage.');
+      if (error.message.includes("rate_limit")) {
+        throw new Error("OpenAI rate limit exceeded. Please wait and try again.");
+      } else if (error.message.includes("invalid_api_key")) {
+        throw new Error("Invalid OpenAI API key. Please check your OPENAI_API_KEY environment variable.");
+      } else if (error.message.includes("quota_exceeded")) {
+        throw new Error("OpenAI quota exceeded. Please check your account usage.");
       }
     }
     
@@ -389,7 +461,7 @@ async function queryRag(
  * @param rawOnly - Whether to return raw results without AI processing
  * @returns The answer string
  */
-import { generateMetadataFilters } from './metadata';
+import { generateMetadataFilters } from "./metadata";
 
 export async function askQuestion(
   question: string, 
@@ -400,45 +472,39 @@ export async function askQuestion(
   apiKey?: string
 ): Promise<string> {
   try {
-    /*
-    * Step 1: Validate if the question is relevant to checkout/payment analysis
-    * Step 2: Enhance the query with a prompt if valid
-    * Step 3: Get the embedding of the question
-    * Step 4: Get the collection and query for relevant documents
-    * Step 5: Generate an answer using OpenAI
-    */
-
     // Validate question relevance using AI
     const validation = await validateQuestion(question);
     if (!validation.isValid) {
-      console.log('Invalid question:', question);
+      console.log("Invalid question:", question);
       return validation.message || "This question is not related to checkout or payment analysis.";
     }
 
     const enhancedQuestion = await enhanceQuestion(question);
-    console.log('Enhanced question:', enhancedQuestion);
+    console.log("Enhanced question:", enhancedQuestion);
 
     // Generate metadata filters based on the question
     // const metadataFilters = await generateMetadataFilters(question, customerId, apiKey);
     // const combinedFilters = { ...where, ...metadataFilters };
-    // console.log('Using metadata filters:', combinedFilters);
+    // console.log("Using metadata filters:", combinedFilters);
     const combinedFilters = {
         customerId: customerId,
-        apiKey: apiKey,
-    }
-    console.log('Using metadata filters:', combinedFilters);
+        apiKey: apiKey
+    };
+    console.log("Using metadata filters:", combinedFilters);
     const rawAnswer = await queryRag(enhancedQuestion, topK, combinedFilters, rawOnly);
-    console.log('Raw answer:', rawAnswer);
+    console.log("Raw answer:", rawAnswer);
     
     // Only enhance the answer if we have actual content and not in raw mode
     const enhancedAnswer = !rawOnly && rawAnswer && !rawAnswer.includes("don't have enough information") 
       ? await enhanceAnswer(rawAnswer, enhancedQuestion)
       : rawAnswer;
-    console.log('Enhanced answer:', enhancedAnswer);
+    console.log("Enhanced answer:", enhancedAnswer);
     
     return enhancedAnswer;
   } catch (error) {
-    console.error('Error:', error instanceof Error ? error.message : error);
+    console.error("Error:", error instanceof Error ? error.message : error);
     throw error;
   }
 }
+
+export default askQuestion;
