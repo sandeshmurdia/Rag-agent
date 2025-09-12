@@ -130,6 +130,9 @@ IMPORTANT GUIDELINES:
 - If data is insufficient, say "I don't have enough information to answer this question"
 - Focus on revenue impact, conversion metrics, and actionable insights
 - Highlight critical patterns and anomalies
+- Create Zipy session links in format: <a href="https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}" target="_blank">View Session</a>
+- Always include a "Sessions" section at the end listing all relevant sessions with their context
+- When mentioning sessions, include revenue impact (loss/gain) and key metrics
 
 2. DATA PRESENTATION:
 - For numerical data, use clean HTML tables with proper styling. Example table structure:
@@ -169,15 +172,35 @@ Example Answer Format:
 <table style="width:100%; border-collapse:collapse; margin:10px 0;"><tr style="background:#f5f5f5"><th style="padding:8px; border:1px solid #ddd; text-align:left">Metric</th><th style="padding:8px; border:1px solid #ddd; text-align:right">Current</th><th style="padding:8px; border:1px solid #ddd; text-align:right">vs Previous</th></tr><tr><td style="padding:8px; border:1px solid #ddd">Revenue</td><td style="padding:8px; border:1px solid #ddd; text-align:right">$10,000</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↑ 15%</td></tr><tr><td style="padding:8px; border:1px solid #ddd">Conversion</td><td style="padding:8px; border:1px solid #ddd; text-align:right">2.4%</td><td style="padding:8px; border:1px solid #ddd; text-align:right">↓ 0.3%</td></tr></table>
 
 ### Detailed Analysis
-• Finding 1
-• Finding 2
+• Finding 1 - In session <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123" target="_blank">View Details</a>
+• Finding 2 - Across multiple sessions (see Sessions section)
 
 ### Technical Details
 Error Code: \`ERR_GATEWAY_TIMEOUT\`
 
 ### Recommendations
 1. Action item 1
-2. Action item 2`;
+2. Action item 2
+
+### Sessions
+#### Revenue Gained Sessions
+1. **$200** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session789" target="_blank">View Session</a>
+   - **Status**: Completed
+   - **Payment Method**: Credit Card
+   - **Funnel Step**: Checkout completed
+
+#### Revenue Lost Sessions
+1. **$110** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123" target="_blank">View Session</a>
+   - **Status**: Abandoned
+   - **Payment Method**: Credit Card
+   - **Funnel Step**: Payment gateway
+   - **Error**: Gateway timeout
+
+2. **$120** <a href="https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session456" target="_blank">View Session</a>
+   - **Status**: Failed
+   - **Payment Method**: UPI
+   - **Funnel Step**: OTP verification
+   - **Error**: Bank declined`;
 }
 
 function buildUserPrompt(question: string, results: QueryResult[]): string {
@@ -187,10 +210,11 @@ function buildUserPrompt(question: string, results: QueryResult[]): string {
   
   const contextParts = results.map((result, index) => {
     const metadata = result.metadata || {};
-    const chunkIndex = metadata.chunkIndex !== undefined ? metadata.chunkIndex : index;
+    const sessionId = metadata.sessionId || 'unknown';
     
-    return `--- Context ${index + 1} [chunkIndex: ${chunkIndex}] ---  
+    return `--- Context ${index + 1} [Session: ${sessionId}] ---  
 Distance: ${result.distance ? result.distance.toFixed(4) : 'N/A'}
+Metadata: ${JSON.stringify(metadata, null, 2)}
 Content:
 ${result.text}
 --- End Context ${index + 1} ---`;
@@ -238,8 +262,26 @@ Format the answer following these rules:
 - Show % changes where available
 - Group errors by type
 - Show conversion funnels as steps
+- Preserve all session links in format <a href="https://app.zipy.ai/{apiKey}/{customerId}/?is_error=false&euid={sessionId}" target="_blank">View Session</a>
+- Include session links when referencing specific data
 
-Keep all factual information exactly the same - only enhance the formatting and structure.`;
+5. Sessions Section:
+- Start with "### Sessions" header
+- Group sessions by revenue impact:
+  • "#### Revenue Gained Sessions" section first
+  • "#### Revenue Lost Sessions" section second
+- For each session:
+  - Show amount in bold: **$200**
+  - Add view link on same line
+  - List details with "-" bullets and bold labels:
+    - **Status**: Completed/Abandoned/Failed
+    - **Payment Method**: The payment method used
+    - **Funnel Step**: The step where completed/abandoned
+    - **Error**: Error details if any (only for failed/abandoned)
+- Sort sessions by amount (highest to lowest) within each group
+
+Keep all factual information exactly the same - only enhance the formatting and structure.
+IMPORTANT: Always preserve session links and include the Sessions section - these are critical for data traceability.`;
 
     const userPrompt = `Question: ${question}
 
