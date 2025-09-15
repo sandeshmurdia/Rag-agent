@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import { MantineProvider, Container, Title, Text, Flex, ActionIcon, Tooltip } from '@mantine/core';
+import { useEffect, useRef, useState, Fragment, type FC, type ReactElement } from 'react';
+import { MantineProvider, Container, Title, Text, Button, Box, Group } from '@mantine/core';
+import type { MantineThemeOverride, MantineProviderProps } from '@mantine/core';
 import axios from 'axios';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { ChatSidebar } from './components/ChatSidebar';
 import type { ChatMessage as ChatMessageType } from './types';
-import { IconBrain, IconPlus } from '@tabler/icons-react';
+import { IconBrain, IconChartBar } from '@tabler/icons-react';
+import InsightsScreen from './components/InsightsScreen';
 
 const API_BASE_URL = 'http://localhost:3000/api';
 
@@ -16,12 +18,11 @@ interface ChatSession {
     title?: string;
 }
 
-const STORAGE_KEY = 'chat_sessions';
-
-export default function App() {
+const App: FC = (): ReactElement => {
     const [sessions, setSessions] = useState<ChatSession[]>([]);
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [showInsights, setShowInsights] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -109,18 +110,6 @@ export default function App() {
         }
     };
 
-    // Add state for customerId and apiKey
-    const [customerId, setCustomerId] = useState<number | undefined>(undefined);
-    const [apiKey, setApiKey] = useState<string | undefined>(undefined);
-
-    // Load customerId and apiKey from localStorage on mount
-    useEffect(() => {
-        const savedCustomerId = localStorage.getItem('customerId');
-        const savedApiKey = localStorage.getItem('apiKey');
-        if (savedCustomerId) setCustomerId(parseInt(savedCustomerId));
-        if (savedApiKey) setApiKey(savedApiKey);
-    }, []);
-
     const handleSendMessage = async (content: string) => {
         if (!currentSessionId) return;
 
@@ -174,17 +163,6 @@ export default function App() {
         }
     };
 
-    const handleUpdateCredentials = (newCustomerId: number | undefined, newApiKey: string | undefined) => {
-        if (newCustomerId !== undefined) {
-            setCustomerId(newCustomerId);
-            localStorage.setItem('customerId', newCustomerId.toString());
-        }
-        if (newApiKey !== undefined) {
-            setApiKey(newApiKey);
-            localStorage.setItem('apiKey', newApiKey);
-        }
-    };
-
     const handleDeleteChat = async (sessionId: string) => {
         try {
             await axios.delete(`${API_BASE_URL}/chat/session/${sessionId}`);
@@ -202,36 +180,31 @@ export default function App() {
 
     const currentSession = sessions.find(session => session.id === currentSessionId);
 
-  return (
-        <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-                defaultRadius: 'md',
-                white: '#fff',
-                black: '#1A1B1E',
-                primaryColor: 'teal',
-                primaryShade: { light: 6, dark: 8 },
-                colors: {
-                    dark: [
-                        '#C1C2C5',
-                        '#A6A7AB',
-                        '#909296',
-                        '#5C5F66',
-                        '#373A40',
-                        '#2C2E33',
-                        '#25262B',
-                        '#1A1B1E',
-                        '#141517',
-                        '#101113',
-                    ]
-                },
-                other: {
-                    colorScheme: 'dark'
-                }
-            }}
-        >
-            <div className="app-container">
+  const theme: MantineThemeOverride = {
+    defaultRadius: 'md',
+    white: '#fff',
+    black: '#1A1B1E',
+    primaryColor: 'teal',
+    primaryShade: 6,
+    colors: {
+        dark: [
+            '#C1C2C5',
+            '#A6A7AB',
+            '#909296',
+            '#5C5F66',
+            '#373A40',
+            '#2C2E33',
+            '#25262B',
+            '#1A1B1E',
+            '#141517',
+            '#101113',
+        ]
+    }
+  };
+
+  const content: ReactElement = (
+        <MantineProvider theme={theme}>
+            <Box className="app-container">
                 <ChatSidebar
                     sessions={sessions}
                     currentSessionId={currentSessionId || ''}
@@ -239,58 +212,128 @@ export default function App() {
                     onSelectChat={setCurrentSessionId}
                     onDeleteChat={handleDeleteChat}
                 />
-                <div className="chat-container">
-                    <nav className="nav-bar">
-                        <Container size="lg">
-                            <Flex align="center" style={{ height: '100%', display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-                                <Flex align="center" style={{ height: '100%', display: 'flex', gap: '20px', justifyContent: 'space-between' ,paddingLeft: '20px'}}>
-                                    <IconBrain size={32} color="#10a37f" />
-                                    <Title order={1} size="h3">Payment & Checkout Assistant</Title>
-                                </Flex>
-                                
-                            </Flex>
-                        </Container>
-                    </nav>
-
-                    <main className="main-content">
-                        <div className="messages-container">
-                            {(!currentSession || currentSession.messages.length === 0) ? (
-                                <div className="welcome-screen">
-                                    <IconBrain size={64} color="#10a37f" />
-                                    <Title order={2} className="welcome-title">
-                                        How can I help you today?
-                                    </Title>
-                                    <Text size="lg" color="dimmed" className="welcome-text">
-                                        Ask me anything about our products. I can help you find products,
-                                        compare specifications, and make recommendations based on your needs.
-                                    </Text>
-                                </div>
-                            ) : (
-                                <div className="messages-list">
-                                    {currentSession.messages.map((message, index) => (
-                                        <div 
-                                            key={index} 
-                                            className={`message-wrapper ${message.role}`}
+                <Box className="chat-container">
+                    <Box 
+                        component="nav" 
+                        className="nav-bar"
+                        style={{
+                            height: '64px',
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Container 
+                            size="lg" 
+                            px="md" 
+                            style={{
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Group 
+                                justify="space-between" 
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    alignItems: 'center',
+                                    display: 'flex',
+                                    gap: '10px'
+                                }}
+                            >
+                                <Group gap="md" align="center"style={{ display: 'flex' }}>
+                                    <Group gap="sm" align="center" style={{ display: 'flex' }}>
+                                        <IconBrain size={28} color="#10a37f" style={{ flexShrink: 0 }} />
+                                        <Title 
+                                            order={1} 
+                                            size="h3" 
+                                            style={{ 
+                                                whiteSpace: 'nowrap',
+                                                fontSize: '20px',
+                                                lineHeight: '28px',
+                                                margin: 0
+                                            }}
                                         >
-                                            <Container size="lg">
-                                                <ChatMessage message={message} />
-                                            </Container>
-                                        </div>
-                                    ))}
-                                    <div ref={messagesEndRef} />
-                                </div>
-                            )}
-                        </div>
+                                            Payment & Checkout Assistant
+                                        </Title>
+                                    </Group>
+                                </Group>
+                                <Group gap="md" align="center">
+                                    <Button
+                                        variant={showInsights ? "light" : "subtle"}
+                                        onClick={() => setShowInsights(!showInsights)}
+                                        leftSection={<IconChartBar size={18} />}
+                                        styles={(theme) => ({
+                                            root: {
+                                                height: '36px',
+                                                padding: '0 16px',
+                                                backgroundColor: showInsights ? 'rgba(16, 163, 127, 0.15)' : 'transparent',
+                                                color: showInsights ? '#10a37f' : theme.colors.gray[5],
+                                                '&:hover': {
+                                                    backgroundColor: showInsights 
+                                                        ? 'rgba(16, 163, 127, 0.25)' 
+                                                        : 'rgba(255, 255, 255, 0.05)',
+                                                }
+                                            },
+                                            inner: {
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '6px'
+                                            }
+                                        })}
+                                    >
+                                        Insights
+                                    </Button>
+                                </Group>
+                            </Group>
+                        </Container>
+                    </Box>
 
-                        <div className="input-container">
-                            <Container size="lg">
-                                <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
-                            </Container>
-                        </div>
-                    </main>
-      </div>
-      </div>
-            <style jsx>{`
+                    <Box component="main" className="main-content">
+                        {showInsights ? (
+                            <InsightsScreen />
+                        ) : (
+                            <Fragment>
+                                <Box className="messages-container">
+                                    {(!currentSession || currentSession.messages.length === 0) ? (
+                                        <Box className="welcome-screen">
+                                            <IconBrain size={64} color="#10a37f" />
+                                            <Title order={2} className="welcome-title">
+                                                How can I help you today?
+                                            </Title>
+                                            <Text size="lg" color="dimmed" className="welcome-text">
+                                                Ask me anything about checkout flows, payment issues, or revenue impact.
+                                                I can help analyze patterns, identify issues, and suggest improvements.
+                                            </Text>
+                                        </Box>
+                                    ) : (
+                                        <Box className="messages-list">
+                                            {currentSession.messages.map((message, index) => (
+                                                <Box 
+                                                    key={index} 
+                                                    className={`message-wrapper ${message.role}`}
+                                                >
+                                                    <Container size="lg">
+                                                        <ChatMessage message={message} />
+                                                    </Container>
+                                                </Box>
+                                            ))}
+                                            <Box ref={messagesEndRef} />
+                                        </Box>
+                                    )}
+                                </Box>
+
+                                <Box className="input-container">
+                                    <Container size="lg">
+                                        <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
+                                    </Container>
+                                </Box>
+                            </Fragment>
+                        )}
+                    </Box>
+                </Box>
+            </Box>
+            <style>{`
                 .app-container {
                     display: flex;
                     min-height: 100vh;
@@ -310,8 +353,11 @@ export default function App() {
                     background-color: rgba(15,15,15,0.95);
                     backdrop-filter: blur(10px);
                     border-bottom: 1px solid rgba(255,255,255,0.1);
-                    padding: 16px 0;
                     z-index: 100;
+                    transition: all 0.3s ease;
+                    min-height: 64px;
+                    display: flex;
+                    align-items: center;
                 }
 
                 .main-content {
@@ -386,4 +432,8 @@ export default function App() {
             `}</style>
         </MantineProvider>
     );
-}
+
+  return content;
+};
+
+export default App;

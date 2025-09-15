@@ -65,7 +65,7 @@ export async function getAllSessions(): Promise<Array<{ id: string; createdAt: D
     });
 
     // Convert map to array of session objects
-    return Array.from(sessionMap).map(([id, timestamp]) => ({
+    return Array.from(sessionMap.entries()).map(([id, timestamp]) => ({
       id,
       createdAt: timestamp
     }));

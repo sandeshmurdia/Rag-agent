@@ -5,10 +5,14 @@ import { config } from './config';
 import { ChatMessage } from './types';
 import { askQuestion } from './services/ask';
 import { storeChatMessage, getChatMessages, deleteChatMessages, getAllSessions } from './services/chat';
+import statsRouter from './routes/stats';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Mount the stats router
+app.use('/api/stats', statsRouter);
 
 // Get all chat sessions
 app.get('/api/chat/sessions', async (req, res) => {
