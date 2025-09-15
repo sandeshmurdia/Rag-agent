@@ -230,15 +230,60 @@ function buildSystemPrompt(): string {
     "- Use > for highlighting critical insights\n" +
     "- Use ### for section headers\n\n" +
     "5. SPECIFIC DATA TYPES:\n" +
-    "- Revenue: Always include % change\n" +
-    "- Errors: Group by type/gateway\n" +
-    "- Time metrics: Show trends\n" +
-    "- Conversion: Show funnel steps\n\n" +
+    "- Revenue: Always include % change and cumulative values\n" +
+    "- Errors: Group by type/gateway and show frequency\n" +
+    "- Time metrics: Show trends and patterns\n" +
+    "- Conversion: Show complete funnel steps with drop-off rates\n" +
+    "- Session Analysis:\n" +
+    "  • Group by status (Completed/Abandoned/Failed)\n" +
+    "  • Calculate success vs failure rates\n" +
+    "  • Identify common drop-off points\n" +
+    "  • Show revenue impact by status\n" +
+    "  • Track item-level conversion\n" +
+    "  • Analyze payment method success rates\n" +
+    "  • Compare cart values across status types\n\n" +
     "Example Answer Format:\n" +
     "### Summary\n" +
-    "> Key insight or critical finding\n\n" +
-    "**Metrics Overview:**\n" +
-    "<table style=\"width:100%; border-collapse:collapse; margin:10px 0;\"><tr style=\"background:#f5f5f5\"><th style=\"padding:8px; border:1px solid #ddd; text-align:left\">Metric</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Current</th><th style=\"padding:8px; border:1px solid #ddd; text-align:right\">vs Previous</th></tr><tr><td style=\"padding:8px; border:1px solid #ddd\">Revenue</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">$10,000</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">↑ 15%</td></tr><tr><td style=\"padding:8px; border:1px solid #ddd\">Conversion</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">2.4%</td><td style=\"padding:8px; border:1px solid #ddd; text-align:right\">↓ 0.3%</td></tr></table>\n\n" +
+    "> Key insights and critical findings from all session types\n\n" +
+    "**Overall Metrics:**\n" +
+    "<table style=\"width:100%; border-collapse:collapse; margin:10px 0;\">\n" +
+    "<tr style=\"background:#f5f5f5\">\n" +
+    "  <th style=\"padding:8px; border:1px solid #ddd; text-align:left\">Metric</th>\n" +
+    "  <th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Completed</th>\n" +
+    "  <th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Abandoned</th>\n" +
+    "  <th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Failed</th>\n" +
+    "  <th style=\"padding:8px; border:1px solid #ddd; text-align:right\">Total Impact</th>\n" +
+    "</tr>\n" +
+    "<tr>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd\">Sessions</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">5</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">3</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">2</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">10 Total</td>\n" +
+    "</tr>\n" +
+    "<tr>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd\">Revenue</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">$10,000 ↑</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">-$3,000 ↓</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">-$2,000 ↓</td>\n" +
+    "  <td style=\"padding:8px; border:1px solid #ddd; text-align:right\">$5,000 Net</td>\n" +
+    "</tr>\n" +
+    "</table>\n\n" +
+    "### Success Analysis\n" +
+    "- **Conversion Rate**: 50% (5/10 sessions completed)\n" +
+    "- **Average Cart Value**: $1,500 per successful session\n" +
+    "- **Top Performing Items**: iPhone 15 Pro (80% conversion)\n" +
+    "- **Best Payment Method**: Credit Card (90% success rate)\n\n" +
+    "### Drop-off Analysis\n" +
+    "- **Abandonment Rate**: 30% (3/10 sessions)\n" +
+    "- **Common Drop Points**: Payment Gateway (60%), Cart Review (40%)\n" +
+    "- **Average Lost Value**: $1,000 per abandoned session\n" +
+    "- **Main Reasons**: Price concerns (40%), Gateway timeout (30%)\n\n" +
+    "### Failure Analysis\n" +
+    "- **Failure Rate**: 20% (2/10 sessions)\n" +
+    "- **Error Types**: Payment Declined (50%), OTP Issues (30%)\n" +
+    "- **Impact by Payment**: UPI (70% of failures), Credit Card (30%)\n" +
+    "- **Recovery Potential**: $2,000 from fixable errors\n\n" +
     "### Detailed Analysis\n" +
     "• Finding 1 - In session <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123\" target=\"_blank\">View Details</a>\n" +
     "• Finding 2 - Across multiple sessions (see Sessions section)\n\n" +
@@ -248,38 +293,63 @@ function buildSystemPrompt(): string {
     "1. Action item 1\n" +
     "2. Action item 2\n\n" +
     "```markdown\n" +
-    "### Sessions\n" +
-    "#### Revenue Gained Sessions\n" +
-    "1. **$200** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session789\" target=\"_blank\">View Session</a>\n" +
-    "   - **Status**: Completed\n" +
-    "   - **Items**: 1x iPhone 15 Pro ($999), 2x AirPods Pro ($249 each)\n" +
-    "   - **Total Items**: 3\n" +
-    "   - **Cart Value**: $1,497\n" +
-    "   - **Payment Method**: Credit Card\n" +
-    "   - **Funnel Step**: Checkout completed\n" +
-    "   - **Timestamp**: 2025-09-11 12:45:23 UTC\n\n" +
-    "#### Revenue Lost Sessions\n" +
-    "1. **$1,099** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123\" target=\"_blank\">View Session</a>\n" +
-    "   - **Status**: Abandoned\n" +
-    "   - **Items**: 1x MacBook Air ($1,099)\n" +
-    "   - **Total Items**: 1\n" +
-    "   - **Cart Value**: $1,099\n" +
-    "   - **Payment Method**: Credit Card\n" +
-    "   - **Funnel Step**: Payment gateway\n" +
-    "   - **Error**: Gateway timeout\n" +
-    "   - **Timestamp**: 2025-09-11 13:20:15 UTC\n" +
-    "   - **Revenue Impact**: Potential loss of $1,099 due to payment gateway timeout\n\n" +
-    "2. **$927** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session456\" target=\"_blank\">View Session</a>\n" +
-    "   - **Status**: Failed\n" +
-    "   - **Items**: 2x iPad Mini ($399 each), 1x Apple Pencil ($129)\n" +
-    "   - **Total Items**: 3\n" +
-    "   - **Cart Value**: $927\n" +
-    "   - **Payment Method**: UPI\n" +
-    "   - **Funnel Step**: OTP verification\n" +
-    "   - **Error**: Bank declined\n" +
-    "   - **Timestamp**: 2025-09-11 14:10:45 UTC\n" +
-    "   - **Revenue Impact**: Lost sale of $927 due to payment failure at OTP step\n\n" +
-    "Note: Multiple sessions with same items are grouped together to show cumulative impact.\n" +
+    "### Sessions Analysis\n\n" +
+    "#### Successful Transactions (Revenue Gained)\n" +
+    "1. **$200 Completed** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session789\" target=\"_blank\">View Session</a>\n" +
+    "   - **Items & Revenue**:\n" +
+    "     • 1x iPhone 15 Pro ($999)\n" +
+    "     • 2x AirPods Pro ($249 each)\n" +
+    "     • Total Items: 3\n" +
+    "     • Cart Value: $1,497\n" +
+    "   - **Transaction Details**:\n" +
+    "     • Payment Method: Credit Card\n" +
+    "     • Funnel Steps: Cart → Checkout → Payment → Success\n" +
+    "     • Duration: 5m 30s\n" +
+    "     • Timestamp: 2025-09-11 12:45:23 UTC\n" +
+    "   - **Success Factors**:\n" +
+    "     • Quick checkout (under 6 minutes)\n" +
+    "     • No payment retries needed\n" +
+    "     • Popular item combination\n\n" +
+    "#### Abandoned Carts (Potential Revenue Loss)\n" +
+    "1. **$1,099 Lost** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session123\" target=\"_blank\">View Session</a>\n" +
+    "   - **Items & Revenue**:\n" +
+    "     • 1x MacBook Air ($1,099)\n" +
+    "     • Total Items: 1\n" +
+    "     • Cart Value: $1,099\n" +
+    "   - **Drop-off Details**:\n" +
+    "     • Last Step: Payment Gateway\n" +
+    "     • Payment Method: Credit Card\n" +
+    "     • Duration: 8m 45s\n" +
+    "     • Timestamp: 2025-09-11 13:20:15 UTC\n" +
+    "   - **Abandonment Analysis**:\n" +
+    "     • Error: Gateway Timeout\n" +
+    "     • User Attempted: 2 payment retries\n" +
+    "     • Potential Recovery: High (technical error)\n" +
+    "     • Similar Sessions: 2 other users faced same issue\n\n" +
+    "#### Failed Transactions (Revenue Loss)\n" +
+    "1. **$927 Lost** <a href=\"https://app.zipy.ai/ac244488/1180/?is_error=false&euid=session456\" target=\"_blank\">View Session</a>\n" +
+    "   - **Items & Revenue**:\n" +
+    "     • 2x iPad Mini ($399 each)\n" +
+    "     • 1x Apple Pencil ($129)\n" +
+    "     • Total Items: 3\n" +
+    "     • Cart Value: $927\n" +
+    "   - **Failure Details**:\n" +
+    "     • Error Point: OTP Verification\n" +
+    "     • Payment Method: UPI\n" +
+    "     • Duration: 12m 20s\n" +
+    "     • Timestamp: 2025-09-11 14:10:45 UTC\n" +
+    "   - **Failure Analysis**:\n" +
+    "     • Error: Bank Declined\n" +
+    "     • User Attempted: 3 OTP resends\n" +
+    "     • Potential Recovery: Medium (payment method switch)\n" +
+    "     • Pattern: Part of 15% UPI failure trend\n\n" +
+    "#### Session Grouping Analysis\n" +
+    "- **By Product**: MacBook Air appears in 3 more abandoned sessions\n" +
+    "- **By Error**: Gateway timeout affected 5 other sessions today\n" +
+    "- **By Payment**: UPI shows 25% higher failure rate than Credit Card\n" +
+    "- **By Time**: Peak failures during 2-3 PM UTC\n" +
+    "- **By Value**: Carts over $1,000 have 30% higher abandonment\n\n" +
+    "Note: Sessions are grouped to show patterns and cumulative impact. All metrics are from the last 24 hours.\n" +
     "```";
 }
 
@@ -386,7 +456,7 @@ async function enhanceAnswer(answer: string, question: string): Promise<string> 
 
 async function queryRag(
   question: string, 
-  topK: number = 10,
+  topK: number = 30, // Increased to get more chunks
   where?: Record<string, any>,
   rawOnly: boolean = false
 ): Promise<string> {
@@ -465,7 +535,7 @@ import { generateMetadataFilters } from "./metadata";
 
 export async function askQuestion(
   question: string, 
-  topK: number = 10,
+  topK: number = 30,
   where: Record<string, any> = {},
   rawOnly: boolean = false,
   customerId?: number,

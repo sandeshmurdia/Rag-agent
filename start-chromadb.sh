@@ -25,4 +25,4 @@ echo "📝 Press Ctrl+C to stop the server"
 echo ""
 
 # Start ChromaDB server
-chroma run --host localhost --port 8000
+python3 -m chromadb.server --host localhost --port 8000

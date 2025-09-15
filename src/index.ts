@@ -94,7 +94,7 @@ app.post('/api/chat/:sessionId', async (req, res) => {
         // Get response from agent with metadata filters
         const response = await askQuestion(
             message,
-            10, // topK
+            30, // topK
             {}, // base filters
             false, // rawOnly
             req.body.customerId, // optional customerId

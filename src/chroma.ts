@@ -151,7 +151,7 @@ export async function upsertDocuments(
 export async function queryTopK(
   collection: Collection,
   queryEmbedding: number[],
-  topK: number = 8,
+  topK: number = 30,
   where?: any
 ): Promise<QueryResult[]> {
   console.log(`Querying collection for top ${topK} results...`);

@@ -1,78 +1,62 @@
 import dotenv from 'dotenv';
+import { z } from 'zod';
 
-// Load environment variables from .env file
+// Load environment variables
 dotenv.config();
 
-// Configuration interface for type safety
-export interface Config {
-  openai: {
-    apiKey: string;
-    embeddingModel: string;
-    chatModel: string;
-  };
-  google: {
-    apiKey: string;
-    model: string;
-  };
-  chroma: {
-    url: string;
-    apiToken?: string;
-    collection: string;
-  };
-  chunking: {
-    size: number;
-    overlap: number;
-    maxDocsPerFile: number;
-  };
-  embedding: {
-    provider: 'openai' | 'google';
-    model: string;
-  };
+// Define environment variable schema
+const envSchema = z.object({
+    OPENAI_API_KEY: z.string().default('sk-793be324'),
+    OPENAI_EMBEDDING_MODEL: z.string().default('text-embedding-3-small'),
+    OPENAI_CHAT_MODEL: z.string().default('gpt-4o-mini'),
+    GOOGLE_API_KEY: z.string().optional().default(''),
+    GOOGLE_MODEL: z.string().optional().default('text-embedding-api'),
+    CHROMA_URL: z.string().default('http://localhost:8000'),
+    CHROMA_API_TOKEN: z.string().optional(),
+    CHROMA_COLLECTION: z.string().default('semantic_chunks'),
+    CHUNK_SIZE: z.string().default('2000'),
+    CHUNK_OVERLAP: z.string().default('200'),
+    MAX_DOCS_PER_FILE: z.string().default('10000'),
+    EMBEDDING_PROVIDER: z.enum(['openai', 'google']).default('openai'),
+    EMBEDDING_MODEL: z.string().default('text-embedding-3-large'),
+});
+
+// Parse and validate environment variables
+const env = envSchema.parse(process.env);
+
+// Required environment variables
+const requiredVars = ['OPENAI_API_KEY', 'CHROMA_URL'];
+
+// Check for missing required variables
+const missing = requiredVars.filter(varName => !env[varName as keyof typeof env]);
+
+if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
 }
 
-// Validate required environment variables
-function validateConfig(): void {
-  const requiredVars = ['OPENAI_API_KEY', 'CHROMA_URL'];
-  const missing = requiredVars.filter(varName => !process.env[varName]);
-  
-  if (missing.length > 0) {
-    throw new Error(
-      `Missing required environment variables: ${missing.join(', ')}\n` +
-      'Please copy env.example to .env and fill in the required values.'
-    );
-  }
-}
-
-// Parse and validate configuration
-export function getConfig(): Config {
-  validateConfig();
-  
-  return {
+// Export configuration
+export const config = {
     openai: {
-      apiKey: process.env.OPENAI_API_KEY!,
-      embeddingModel: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
-      chatModel: process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini',
+        apiKey: env.OPENAI_API_KEY,
+        embeddingModel: env.OPENAI_EMBEDDING_MODEL,
+        chatModel: env.OPENAI_CHAT_MODEL,
     },
     google: {
-      apiKey: process.env.GOOGLE_API_KEY || '',
-      model: process.env.GOOGLE_MODEL || 'text-embedding-api',
+        apiKey: env.GOOGLE_API_KEY,
+        model: env.GOOGLE_MODEL,
     },
     chroma: {
-      url: process.env.CHROMA_URL!,
-      apiToken: process.env.CHROMA_API_TOKEN,
-      collection: process.env.CHROMA_COLLECTION || 'semantic_chunks',
+        url: env.CHROMA_URL,
+        apiToken: env.CHROMA_API_TOKEN,
+        collection: env.CHROMA_COLLECTION,
     },
     chunking: {
-      size: parseInt(process.env.CHUNK_SIZE || '2000'),
-      overlap: parseInt(process.env.CHUNK_OVERLAP || '200'),
-      maxDocsPerFile: parseInt(process.env.MAX_DOCS_PER_FILE || '10000'),
+        size: parseInt(env.CHUNK_SIZE),
+        overlap: parseInt(env.CHUNK_OVERLAP),
+        maxDocsPerFile: parseInt(env.MAX_DOCS_PER_FILE),
     },
     embedding: {
-      provider: (process.env.EMBEDDING_PROVIDER as 'openai' | 'google') || 'openai',
-      model: process.env.EMBEDDING_MODEL || 'text-embedding-3-large',
+        provider: env.EMBEDDING_PROVIDER,
+        model: env.EMBEDDING_MODEL,
     },
-  };
-}
-
-// Export default config instance
-export const config = getConfig();
+} as const;
